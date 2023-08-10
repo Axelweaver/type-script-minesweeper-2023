@@ -1,0 +1,37 @@
+@font-face {
+  font-family: 'Cascadia Mono SemiBold';
+  src: url('./fonts/CascadiaMonoPL-SemiBold.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+  html {
+    height: 100%;
+  }
+
+  body {
+    background-color: black;
+    color: #F8F8FF;
+  }
+
+  #main {
+    min-height: 94vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  canvas {
+    z-index: 10;
+    border: 1px solid grey;
+    background-color: transparent;
+  }
+  
+  .text-info {
+    text-align: center;
+    font-size: 22px;
+  }
+  
