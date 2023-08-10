@@ -4,11 +4,13 @@ export default function drawEmptyRect (
     x: number,
     y: number,
     width: number,
-    height: number): void {
+    height: number,
+    lineWidth: number = 1): void {
     if (context == null) {
         return;
     }
 
+    context.lineWidth = lineWidth;
     context.strokeStyle = color;
     context.strokeRect(x, y, width, height);
 }
