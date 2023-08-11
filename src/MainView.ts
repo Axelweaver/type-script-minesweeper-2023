@@ -36,7 +36,7 @@ export class MainView {
             this._context,
             BORDER_COLOR,
             this._gameField.positionX,
-            this._gameField.positionY ,
+            this._gameField.positionY,
             this._gameField.width,
             this._gameField.height,
             3

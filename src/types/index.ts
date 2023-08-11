@@ -18,3 +18,11 @@ export interface GameSquare {
     height: number
 }
 
+export enum CellState {
+    Closed,
+    Digit,
+    Bomb,
+    Empty,
+    Flag,
+    Unknown
+}
