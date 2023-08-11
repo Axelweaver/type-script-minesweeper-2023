@@ -26,3 +26,7 @@ export enum CellState {
     Flag,
     Unknown
 }
+
+export type ClickFunc = (x: number, y: number) => void;
+
+export type MouseEventHandler = (e: MouseEvent) => void;

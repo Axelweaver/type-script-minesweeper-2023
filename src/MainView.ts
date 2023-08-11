@@ -2,7 +2,7 @@ import {  IRectangle, ITextInfo, GameSquare } from "./types";
 import { BORDER_COLOR, CANVAS_ID } from './setup';
 import { drawEmptyRect } from './helpers';
 
-export class MainView {
+export default class MainView {
     canvas: HTMLCanvasElement;
     private readonly _context: CanvasRenderingContext2D | null;
     private readonly _gameField: IRectangle;
@@ -42,5 +42,9 @@ export class MainView {
             3
         );
 
-    }   
+    }
+
+    get canvasRect (): DOMRect {
+        return this.canvas.getBoundingClientRect();
+    }
 }

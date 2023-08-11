@@ -1,6 +1,4 @@
-
-export default class BombsField {
-
+export default class GameForm {
     constructor() {
         
     }
