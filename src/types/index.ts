@@ -27,6 +27,11 @@ export enum CellState {
     Unknown
 }
 
+export type CellClickState = {
+    rowIndex: number
+    columnIndex: number
+}
+
 export type ClickFunc = (x: number, y: number) => void;
 
 export type MouseEventHandler = (e: MouseEvent) => void;

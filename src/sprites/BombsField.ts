@@ -1,5 +1,5 @@
-import { IRectangle, FieldCell, CellState } from '../types';
-import { calcBombsFieldRect, calcCellRect } from '../helpers';
+import { IRectangle, FieldCell, CellState, CellClickState } from '../types';
+import { calcBombsFieldRect, calcCellRect, findCellPosition, checkClickCollide } from '../helpers';
 
 export default class BombsField {
     readonly rect: IRectangle;
@@ -28,6 +28,20 @@ export default class BombsField {
                 value: 0
             })
         );
+    }
+    
+    isFieldClick(positionX: number, positionY: number): boolean {
+        return checkClickCollide(positionX, positionY, this.rect);
+    }
+
+    clickHanlder(positionX: number, positionY: number): CellClickState {
+        const position = findCellPosition(
+            positionX,
+            positionY,
+            this.rect
+        );
+
+        return position;
     }
 
     getCellRect(rowIndex: number, columnIndex: number): IRectangle {

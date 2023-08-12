@@ -1,13 +1,14 @@
-import { IRectangle, Cell } from './types';
+import { IRectangle, FieldCell, CellState } from './types';
 import { 
     CANVAS_ID, 
     FOREGROUND_COLOR,
     LIGHT_CORNER_COLOR,
     DARK_CORNER_COLOR,
     FORM_SHADOW_WIDTH,
-    CELL_SHADOW_WIDTH
+    CELL_SHADOW_WIDTH,
+    CELL_BORDER_COLOR
 } from './setup';
-import { drawCorner, drawFilledRect } from './helpers';
+import { drawCorner, drawFilledRect, drawEmptyRect, clearRect } from './helpers';
 import { GameForm, GameFormInfoPanel, BombsField } from './sprites';
 
 export default class MainView {
@@ -86,14 +87,38 @@ export default class MainView {
 
     drawCell(field: BombsField, rowIndex: number, columnIndex: number): void {
         const cellRect = field.getCellRect(rowIndex, columnIndex);
+        const cell = field.cells[rowIndex][columnIndex];
+        switch (cell.state) {
+            case CellState.Closed:
+                this.drawRectWithShadow(
+                    cellRect,
+                    FOREGROUND_COLOR,
+                    LIGHT_CORNER_COLOR,
+                    DARK_CORNER_COLOR,
+                    CELL_SHADOW_WIDTH
+                );                
+                break;
+            case CellState.Empty:
+                drawFilledRect(
+                    this._context,
+                    cellRect,
+                    FOREGROUND_COLOR
+                );
+                drawEmptyRect(
+                    this._context,
+                    cellRect,
+                    CELL_BORDER_COLOR
+                );
+                break;
+            default:
+                break;
+        }
 
-        this.drawRectWithShadow(
-            cellRect,
-            FOREGROUND_COLOR,
-            LIGHT_CORNER_COLOR,
-            DARK_CORNER_COLOR,
-            CELL_SHADOW_WIDTH
-        );
+    }
+
+    clearCell(field: BombsField, rowIndex: number, columnIndex: number): void {
+        const cellRect = field.getCellRect(rowIndex, columnIndex);
+        clearRect(this._context, cellRect);
     }
 
     get canvasRect (): DOMRect {
