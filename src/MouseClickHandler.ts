@@ -1,4 +1,4 @@
-import { type ClickFunc, type MouseClickHandler } from './types';
+import { type ClickFunc, type MouseEventHandler } from './types';
 
 export default class MouseClickHandler {
     private readonly _canvasRect: DOMRect;
@@ -8,8 +8,7 @@ export default class MouseClickHandler {
         console.log('canvas rect', canvasRect);
     }
 
-
-    getEventHadler(clickFn: ClickFunc ): MouseClickHandler {
+    getEventHadler(clickFn: ClickFunc ): MouseEventHandler {
         const canvasLeft = this._canvasRect.left;
         const canvasTop = this._canvasRect.top;
 

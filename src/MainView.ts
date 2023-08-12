@@ -1,47 +1,99 @@
-import {  IRectangle, ITextInfo, GameSquare } from "./types";
-import { BORDER_COLOR, CANVAS_ID } from './setup';
-import { drawEmptyRect } from './helpers';
+import { IRectangle, Cell } from './types';
+import { 
+    CANVAS_ID, 
+    FOREGROUND_COLOR,
+    LIGHT_CORNER_COLOR,
+    DARK_CORNER_COLOR,
+    FORM_SHADOW_WIDTH,
+    CELL_SHADOW_WIDTH
+} from './setup';
+import { drawCorner, drawFilledRect } from './helpers';
+import { GameForm, GameFormInfoPanel, BombsField } from './sprites';
 
 export default class MainView {
     canvas: HTMLCanvasElement;
     private readonly _context: CanvasRenderingContext2D | null;
-    private readonly _gameField: IRectangle;
-    private readonly _nextFigureField: IRectangle;
-    private readonly _scoreField: IRectangle;
-    private readonly _soundButtonField: IRectangle;
-    private readonly _textInfo: ITextInfo;
-    private readonly _secondaryTextInfo: ITextInfo;
-    private readonly _gameSquare: GameSquare;
-
 
     constructor () {
         this.canvas = document.querySelector(CANVAS_ID) as HTMLCanvasElement;
         this._context = this.canvas.getContext('2d');
-        const gameFieldWidth = Math.round(this.canvas.width / 2);
-        this._gameField = {
-            positionX: Math.round(this.canvas.width / 2) - Math.round(gameFieldWidth / 2),
-            positionY: Math.round(this.canvas.height / 2) - Math.round(gameFieldWidth / 2),
-            width: gameFieldWidth,
-            height: gameFieldWidth 
-        };
+
     }
 
-    clearGameField (): void {
-        clearRect(this._context, this._gameField);
-    }
+    drawRectWithShadow(
+        rect: IRectangle, 
+        color: string, 
+        shadowColor1: string, 
+        shadowColor2: string,
+        shadowWidth: number): void {
 
-    drawGameField (): void {
-
-        drawEmptyRect(
+        drawFilledRect(
             this._context,
-            BORDER_COLOR,
-            this._gameField.positionX,
-            this._gameField.positionY,
-            this._gameField.width,
-            this._gameField.height,
-            3
+            rect,
+            color
         );
 
+        drawCorner(
+            this._context,
+            rect,
+            shadowColor1,
+            shadowColor2,
+            shadowWidth
+        );
+    }
+
+    drawGameForm(form: GameForm): void {
+        this.drawRectWithShadow(
+            form.rect,
+            FOREGROUND_COLOR,
+            LIGHT_CORNER_COLOR,
+            DARK_CORNER_COLOR,
+            FORM_SHADOW_WIDTH            
+        );
+        this.drawInfoPanel(form.infoPanel);
+        this.drawBombsField(form.bombsField);
+    }
+
+    drawInfoPanel(panel: GameFormInfoPanel): void {
+        this.drawRectWithShadow(
+            panel.rect,
+            FOREGROUND_COLOR,
+            DARK_CORNER_COLOR,
+            LIGHT_CORNER_COLOR,
+            FORM_SHADOW_WIDTH                      
+        );
+    }
+
+    drawBombsField(field: BombsField): void {
+        this.drawRectWithShadow(
+            field.rect,
+            FOREGROUND_COLOR,
+            DARK_CORNER_COLOR,
+            LIGHT_CORNER_COLOR,
+            FORM_SHADOW_WIDTH            
+        );
+
+        this.drawCells(field);
+    }
+
+    drawCells(field: BombsField): void {
+        field.cells.forEach((row: FieldCell[], rowIndex: number): void => {
+            row.forEach((column: FieldCell, columnIndex: number): void => {
+                this.drawCell(field, rowIndex, columnIndex);
+            });
+        });
+    }
+
+    drawCell(field: BombsField, rowIndex: number, columnIndex: number): void {
+        const cellRect = field.getCellRect(rowIndex, columnIndex);
+
+        this.drawRectWithShadow(
+            cellRect,
+            FOREGROUND_COLOR,
+            LIGHT_CORNER_COLOR,
+            DARK_CORNER_COLOR,
+            CELL_SHADOW_WIDTH
+        );
     }
 
     get canvasRect (): DOMRect {

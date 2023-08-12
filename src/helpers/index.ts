@@ -1,3 +1,7 @@
+export { default as calcBombsFieldRect } from './calcBombsFieldRect';
+export { default as calcCellRect } from './calcCellRect';
+export { default as calcFormRect } from './calcFormRect';
+export { default as calcInfoPanelRect } from './calcInfoPanelRect';
 export { default as clearRect } from './clearRect';
 export { default as drawCorner } from './drawCorner';
 export { default as drawEmptyRect } from './drawEmptyRect';

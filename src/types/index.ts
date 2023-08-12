@@ -30,3 +30,8 @@ export enum CellState {
 export type ClickFunc = (x: number, y: number) => void;
 
 export type MouseEventHandler = (e: MouseEvent) => void;
+
+export type FieldCell = {
+    state: CellState,
+    value: number
+}

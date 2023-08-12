@@ -1,30 +1,30 @@
+import { IRectangle } from '../types';
+
 export default function drawCorner (
     context: CanvasRenderingContext2D | null,
+    rect: IRectangle,
     firstColor: string,
     secondColor: string,
-    x: number,
-    y: number,
-    width: number,
-    height: number): void {
+    shadowWidth: number): void {
     if (context == null) {
         return;
     }
-    const offset = Math.round(width * 0.1);
 
-    context.strokeStyle = firstColor;
-    context.beginPath();
+    for(let i = 0; i <= shadowWidth; ++i) {
+        context.strokeStyle = firstColor;
+        context.beginPath();
+        context.lineWidth = 1;
+        context.moveTo(rect.positionX + i, rect.positionY + rect.height - i);
+        context.lineTo(rect.positionX + i, rect.positionY + i);
+        context.lineTo(rect.positionX + rect.width - i, rect.positionY + i);
+        context.stroke();
 
-    context.lineWidth = 1;
-    context.moveTo(x + offset, y + height - offset);
-    context.lineTo(x + offset, y + offset);
-    context.lineTo(x + width - offset, y + offset);
-    context.stroke();
-
-    context.beginPath();
-    context.strokeStyle = secondColor;
-    context.moveTo(x + offset, y + height - offset);
-    context.lineTo(x - offset + width, y + height - offset);
-    context.lineTo(x - offset + width, y + offset);
-
-    context.stroke();
+        context.strokeStyle = secondColor;
+        context.beginPath();
+        context.lineWidth = 1;
+        context.moveTo(rect.positionX + i, rect.positionY + rect.height - i);
+        context.lineTo(rect.positionX - i + rect.width, rect.positionY + rect.height - i);
+        context.lineTo(rect.positionX - i + rect.width, rect.positionY + i);
+        context.stroke();
+    }
 }
