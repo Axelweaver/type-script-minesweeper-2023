@@ -35,3 +35,14 @@ const clickFunc = (x: number, y: number): void => {
 // ));
 
 view.canvas.addEventListener('click', clickHanlder.getEventHadler(clickFunc));
+for(let i = 0; i < 10; ++i) {
+    view.drawDigit(
+        {
+            positionX: 20 + 30 * i,
+            positionY: 20,
+            width: 30,
+            height: 60
+        },
+        i
+    );    
+}

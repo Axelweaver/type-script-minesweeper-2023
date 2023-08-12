@@ -8,7 +8,7 @@ import {
     CELL_SHADOW_WIDTH,
     CELL_BORDER_COLOR
 } from './setup';
-import { drawCorner, drawFilledRect, drawEmptyRect, clearRect } from './helpers';
+import { drawCorner, drawFilledRect, drawEmptyRect, clearRect, drawDigit } from './helpers';
 import { GameForm, GameFormInfoPanel, BombsField } from './sprites';
 
 export default class MainView {
@@ -119,6 +119,10 @@ export default class MainView {
     clearCell(field: BombsField, rowIndex: number, columnIndex: number): void {
         const cellRect = field.getCellRect(rowIndex, columnIndex);
         clearRect(this._context, cellRect);
+    }
+
+    drawDigit(rect: IRectangle, digit: number): void {
+        drawDigit(this._context, rect, digit);
     }
 
     get canvasRect (): DOMRect {

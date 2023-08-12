@@ -5,6 +5,7 @@ export { default as calcInfoPanelRect } from './calcInfoPanelRect';
 export { default as checkClickCollide } from './checkClickCollide';
 export { default as clearRect } from './clearRect';
 export { default as drawCorner } from './drawCorner';
+export { default as drawDigit } from './drawDigit';
 export { default as drawEmptyRect } from './drawEmptyRect';
 export { default as drawFilledRect } from './drawFilledRect';
 export { default as drawText } from './drawText';
