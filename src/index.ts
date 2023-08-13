@@ -2,6 +2,7 @@ import MainView from './MainView';
 import { GameForm } from './sprites';
 import MouseClickHandler from './MouseClickHandler';
 import { CellState, CellClickState } from './types';
+// import { drawCellFlag, drawFilledRect } from './helpers';
 
 const view = new MainView();
 const clickHanlder = new MouseClickHandler(view.canvasRect);
@@ -17,6 +18,14 @@ view.drawGameForm(gameForm);
 let firstClick = false;
 let lastClickCell: CellClickState;
 let lastLeftClick = false;
+let isSmileClick = false;
+let timerIntervalId = 0;
+
+const timerTickFunc = (): void => {
+    gameForm.infoPanel.timer.increase();
+    view.clearRect(gameForm.infoPanel.timer.rect);
+    view.drawDigitsPanel(gameForm.infoPanel.timer);
+};
 
 const mouseDownFunc = (x: number, y: number, isLeftButton: boolean): void => {
 
@@ -29,7 +38,12 @@ const mouseDownFunc = (x: number, y: number, isLeftButton: boolean): void => {
             lastLeftClick = true;
         }
     }
-}
+    if(gameForm.infoPanel.isButtonClick(x, y)) {
+        isSmileClick = true;
+        view.clearRect(gameForm.infoPanel.button);
+        view.drawSmileButtonPressed(gameForm.infoPanel.button);
+    }
+};
 
 const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
     console.log('mouseUpFunc', x, y, isLeftButton);
@@ -44,30 +58,65 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
             if(isLeftButton) {
                 const cell = gameForm.bombsField.cells[cellPos.rowIndex][cellPos.columnIndex];
                 if(cell.state === CellState.Closed) {
-                    cell.state = CellState.Empty;                    
+                    // cell.state = CellState.Empty;
+                    if(gameForm.bombsField.isBomb(cellPos.rowIndex, cellPos.columnIndex)) {
+                        console.log('is bomb!', cellPos.rowIndex, cellPos.columnIndex);
+                    }
+
+                    gameForm.bombsField.setCellState(
+                        cellPos.rowIndex,
+                        cellPos.columnIndex,
+                        CellState.Empty
+                    );
                 } else {
-                    cell.state = CellState.Closed;
+                    gameForm.bombsField.setCellState(
+                        cellPos.rowIndex,
+                        cellPos.columnIndex,
+                        CellState.Closed
+                    );
                 }
 
-             
+                if(!firstClick) {
+                    firstClick = true;
+                    timerIntervalId = setInterval(timerTickFunc, 1000);
+                    gameForm.bombsField.createBombs(
+                        cellPos.rowIndex,
+                        cellPos.columnIndex
+                    );
+                }
             }
         }
         view.clearCell(gameForm.bombsField, lastClickCell.rowIndex, lastClickCell.columnIndex);
         view.drawCell(gameForm.bombsField, lastClickCell.rowIndex, lastClickCell.columnIndex);
     }
+    if(isSmileClick) {
+        view.clearRect(gameForm.infoPanel.button);
+        view.drawSmileButton(gameForm.infoPanel.button);
+        if(gameForm.infoPanel.isButtonClick(x, y) && firstClick) {
 
+            clearInterval(timerIntervalId);
+            gameForm.infoPanel.timer.reset();
+            gameForm.bombsField.reset();
+            firstClick = false;
+            view.drawGameForm(gameForm);
+        }
+    }
     lastClickCell = undefined;
     lastLeftClick = false;
-}
-
-const interval = setInterval(function(){
-    gameForm.infoPanel.timer.increase();
-    view.clearRect(gameForm.infoPanel.timer.rect);
-    view.drawDigitsPanel(gameForm.infoPanel.timer);
-},1000);
-
+    isSmileClick = false;
+    console.log(gameForm.bombsField);
+};
 
 view.canvas.addEventListener('mousedown', clickHanlder.getEventHadler(mouseDownFunc));
 view.canvas.addEventListener('mouseup', clickHanlder.getEventHadler(mouseUpFunc));
 view.canvas.oncontextmenu = (e:MouseEvent): void => { e.preventDefault(); };
 
+const bombRect = {
+    positionX: 30,
+    positionY: 30,
+    width: 80,
+    height: 80
+}
+
+// drawFilledRect(view._context, bombRect);
+// drawCellFlag(view._context, bombRect);

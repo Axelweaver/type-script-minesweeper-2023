@@ -11,6 +11,9 @@ export const COUNTER_BACKGROUND_COLOR: string = '#000';
 export const ENABLED_DIGIT_COLOR: string = '#FF0000';
 export const DISABLED_DIGIT_COLOR: string = '#500000';
 export const SMILE_FILL_COLOR: string = '#FFFF00';
+export const BOMB_FILL_COLOR: string = '#000';
+export const BOMB_SHADOW_COLOR: string = '#fff';
+export const FLAG_FILL_COLOR: string = '#FF0000';
 
 export const CELL_SIZE: number = 26;
 export const TOP_INFO_HEIGHT: number = 64;

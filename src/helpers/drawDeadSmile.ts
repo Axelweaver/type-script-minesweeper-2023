@@ -14,7 +14,6 @@ export default function drawDeadSmile(
     const centerY = rect.positionY + rect.height / 2;
     const radius = rect.width / 2 - bodyPadding;
     const smileRadius = rect.width / 5;
-    const eyeRadius = radius / 8;
     const eyeLine = radius / 7;
 
     context.fillStyle = SMILE_FILL_COLOR;

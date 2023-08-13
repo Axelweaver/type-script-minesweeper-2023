@@ -29,9 +29,9 @@ export enum CellState {
 }
 
 export type CellClickState = {
-    rowIndex: number
-    columnIndex: number,
-    isLeftButton: boolean
+    rowIndex: number;
+    columnIndex: number;
+    isLeftButton: boolean;
 }
 
 export type ClickFunc = (x: number, y: number, isLeftButton: boolean) => void;
@@ -39,6 +39,11 @@ export type ClickFunc = (x: number, y: number, isLeftButton: boolean) => void;
 export type MouseEventHandler = (e: MouseEvent) => void;
 
 export type FieldCell = {
-    state: CellState,
-    value: number
+    state: CellState;
+    value: number;
+}
+
+export type Bomb = {
+    rowIndex: number;
+    columnIndex: number;
 }

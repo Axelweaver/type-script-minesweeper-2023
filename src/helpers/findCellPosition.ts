@@ -12,6 +12,7 @@ export default function findCellPosition(
         ),
         columnIndex: Math.floor(
             (positionX - field.positionX - FORM_SHADOW_WIDTH) / CELL_SIZE
-        )
+        ),
+        isLeftButton: false
     }
 }

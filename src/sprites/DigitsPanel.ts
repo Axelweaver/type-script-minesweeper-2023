@@ -1,10 +1,11 @@
 import { calcDigitRect, calcDigitsPanelRect } from '../helpers';
+import { IRectangle } from '../types';
 
 export default class DigitsPanel {
     readonly rect: IRectangle;
     readonly digitRects: IRectangle[];
     private _value: number;
-
+    private readonly _initialValue: number;
     constructor(
         topPanelX: number,
         topPanelY: number,
@@ -12,6 +13,7 @@ export default class DigitsPanel {
         initialValue: number = 0,
         isPositionLeft: boolean = true){
         this._value = initialValue;
+        this._initialValue = initialValue;
         this.rect = calcDigitsPanelRect(
             topPanelX,
             topPanelY,
@@ -37,6 +39,10 @@ export default class DigitsPanel {
 
     decrease(): void {
         --this._value;
+    }
+
+    reset(): void {
+        this._value = this._initialValue;
     }
 
     get values(): number[] {

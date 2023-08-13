@@ -7,6 +7,8 @@ export { default as calcInfoPanelRect } from './calcInfoPanelRect';
 export { default as calcSmileButtonRect } from './calcSmileButtonRect';
 export { default as checkClickCollide } from './checkClickCollide';
 export { default as clearRect } from './clearRect';
+export { default as drawCellBomb } from './drawCellBomb';
+export { default as drawCellFlag } from './drawCellFlag';
 export { default as drawCorner } from './drawCorner';
 export { default as drawDeadSmile } from './drawDeadSmile';
 export { default as drawDigit } from './drawDigit';

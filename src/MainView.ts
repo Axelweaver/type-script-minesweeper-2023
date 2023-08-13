@@ -185,7 +185,25 @@ export default class MainView {
         // drawDeadSmile(this._context, rect);
     }
 
+    drawSmileButtonPressed(rect: IRectangle): void {
+        this.drawRectWithShadow(
+            rect,
+            FOREGROUND_COLOR,
+            DARK_CORNER_COLOR,
+            LIGHT_CORNER_COLOR,
+            Math.round(BUTTON_SHADOW_WIDTH / 2)
+        );
+
+        // drawHappySmile(this._context, rect);
+        drawSuprisedSmile(this._context, rect);
+        // drawDeadSmile(this._context, rect);
+    }
+
     get canvasRect (): DOMRect {
         return this.canvas.getBoundingClientRect();
+    }
+
+    get context(): CanvasRenderingContext2D {
+        return this._context;
     }
 }

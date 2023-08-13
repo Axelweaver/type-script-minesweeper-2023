@@ -33,7 +33,8 @@ export default class GameForm {
                 this.rect.positionX,
                 this.rect.positionY,
                 rowsCount, 
-                columnsCount  
+                columnsCount,
+                bombsCount
             );
     }
 }
