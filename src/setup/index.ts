@@ -10,6 +10,7 @@ export const CELL_BORDER_COLOR: string = '#8D8D8D';
 export const COUNTER_BACKGROUND_COLOR: string = '#000';
 export const ENABLED_DIGIT_COLOR: string = '#FF0000';
 export const DISABLED_DIGIT_COLOR: string = '#500000';
+export const SMILE_FILL_COLOR: string = '#FFFF00';
 
 export const CELL_SIZE: number = 26;
 export const TOP_INFO_HEIGHT: number = 64;
@@ -18,3 +19,4 @@ export const SIDE_PANEL_PADDING: number = 12;
 export const TOP_PANEL_PADDING: number = 10;
 export const FORM_SHADOW_WIDTH: number = 4;
 export const CELL_SHADOW_WIDTH: number = 2;
+export const BUTTON_SHADOW_WIDTH: number = 3;

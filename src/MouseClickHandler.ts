@@ -5,7 +5,6 @@ export default class MouseClickHandler {
 
     constructor (canvasRect: DOMRect) {
         this._canvasRect = canvasRect;
-        console.log('canvas rect', canvasRect);
     }
 
     getEventHadler(clickFn: ClickFunc ): MouseEventHandler {
@@ -15,8 +14,8 @@ export default class MouseClickHandler {
         return function(e: MouseEvent) {
             const x = e.clientX - canvasLeft;
             const y = e.clientY - canvasTop;
-
-            clickFn(x, y);
+            const isLeftButton = e.button === 0;
+            clickFn(x, y, isLeftButton);
         };
     }
 }

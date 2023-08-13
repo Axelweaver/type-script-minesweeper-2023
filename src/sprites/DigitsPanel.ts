@@ -18,6 +18,7 @@ export default class DigitsPanel {
             topPanelWidth,
             isPositionLeft
         );
+
         this.digitRects = [];
         for(let i = 0; i < 3; ++i) {
             this.digitRects.push(
@@ -32,7 +33,6 @@ export default class DigitsPanel {
 
     increase(): void {
         ++this._value;
-        console.log('icrease', this._value);
     }
 
     decrease(): void {

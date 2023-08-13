@@ -1,11 +1,12 @@
 import { IRectangle } from '../types';
-import { calcInfoPanelRect } from '../helpers';
+import { calcInfoPanelRect, checkClickCollide, calcSmileButtonRect } from '../helpers';
 import { DigitsPanel } from '../sprites';
 
 export default class GameFormInfoPanel {
     readonly rect: IRectangle;
     readonly timer: DigitsPanel;
     readonly bombsCounter: DigitsPanel;
+    readonly button: IRectangle;
 
     constructor(
         formPositionX: number,
@@ -31,5 +32,14 @@ export default class GameFormInfoPanel {
             0,
             false
         );
+        this.button = calcSmileButtonRect(
+            this.rect.positionX,
+            this.rect.positionY,
+            this.rect.width
+        );
+    }
+
+    isButtonClick(positionX: number, positionY: number): boolean {
+        return checkClickCollide(positionX, positionY, this.rect);
     }
 }

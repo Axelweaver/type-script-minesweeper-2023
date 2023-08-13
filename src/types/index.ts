@@ -20,6 +20,7 @@ export interface GameSquare {
 
 export enum CellState {
     Closed,
+    Pressed,
     Digit,
     Bomb,
     Empty,
@@ -29,10 +30,11 @@ export enum CellState {
 
 export type CellClickState = {
     rowIndex: number
-    columnIndex: number
+    columnIndex: number,
+    isLeftButton: boolean
 }
 
-export type ClickFunc = (x: number, y: number) => void;
+export type ClickFunc = (x: number, y: number, isLeftButton: boolean) => void;
 
 export type MouseEventHandler = (e: MouseEvent) => void;
 

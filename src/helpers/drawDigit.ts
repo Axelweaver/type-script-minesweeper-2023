@@ -6,7 +6,10 @@ export default function drawDigit(
     rect: IRectangle,
     digit: number
     ): void {
-
+        
+    if (context == null) {
+        return;
+    }
     const sectionAcolor = digit !== 1 && digit !== 4
         ? ENABLED_DIGIT_COLOR
         : DISABLED_DIGIT_COLOR;
@@ -47,7 +50,7 @@ export default function drawDigit(
     ];
 
     const sidePadding = rect.width / 8;
-    const sectionWidth = rect.width / 7;
+    const sectionWidth = rect.width / 6;
     const sectionPadding = 2;
     const halfHeight = rect.height / 2;
 

@@ -15,9 +15,9 @@ const gameForm = new GameForm(
 
 view.drawGameForm(gameForm);
 
-const clickFunc = (x: number, y: number): void => {
+const clickFunc = (x: number, y: number, isLeftButton: boolean): void => {
 
-
+    console.log('clickFunc', x, y, isLeftButton);
     if(gameForm.bombsField.isFieldClick(x, y)) {
         const cellPos = gameForm.bombsField.clickHanlder(x, y);
         const cell = gameForm.bombsField.cells[cellPos.rowIndex][cellPos.columnIndex];
@@ -32,5 +32,7 @@ const interval = setInterval(function(){
     view.clearRect(gameForm.infoPanel.timer.rect);
     view.drawDigitsPanel(gameForm.infoPanel.timer);
 },1000);
-view.canvas.addEventListener('click', clickHanlder.getEventHadler(clickFunc));
+
+view.canvas.addEventListener('mousedown', clickHanlder.getEventHadler(clickFunc));
+view.canvas.oncontextmenu = (e:MouseEvent): void => { e.preventDefault(); };
 

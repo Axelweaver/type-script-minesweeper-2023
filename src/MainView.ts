@@ -7,9 +7,17 @@ import {
     FORM_SHADOW_WIDTH,
     CELL_SHADOW_WIDTH,
     CELL_BORDER_COLOR,
-    COUNTER_BACKGROUND_COLOR
+    COUNTER_BACKGROUND_COLOR,
+    BUTTON_SHADOW_WIDTH
 } from './setup';
-import { drawCorner, drawFilledRect, drawEmptyRect, clearRect, drawDigit } from './helpers';
+import { 
+    drawCorner, 
+    drawFilledRect, 
+    drawEmptyRect, 
+    clearRect, 
+    drawDigit, 
+    drawHappySmile 
+} from './helpers';
 import { GameForm, GameFormInfoPanel, BombsField, DigitsPanel } from './sprites';
 
 export default class MainView {
@@ -66,6 +74,7 @@ export default class MainView {
         );
         this.drawDigitsPanel(panel.bombsCounter);
         this.drawDigitsPanel(panel.timer);
+        this.drawSmileButton(panel.button);
     }
 
     drawBombsField(field: BombsField): void {
@@ -147,6 +156,18 @@ export default class MainView {
 
     drawDigit(rect: IRectangle, digit: number): void {
         drawDigit(this._context, rect, digit);
+    }
+
+    drawSmileButton(rect: IRectangle): void {
+        this.drawRectWithShadow(
+            rect,
+            FOREGROUND_COLOR,
+            LIGHT_CORNER_COLOR,
+            DARK_CORNER_COLOR,
+            BUTTON_SHADOW_WIDTH
+        );
+
+        drawHappySmile(this._context, rect);
     }
 
     get canvasRect (): DOMRect {
