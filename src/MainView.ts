@@ -11,12 +11,14 @@ import {
     BUTTON_SHADOW_WIDTH
 } from './setup';
 import { 
-    drawCorner, 
-    drawFilledRect, 
-    drawEmptyRect, 
-    clearRect, 
-    drawDigit, 
-    drawHappySmile 
+    drawCorner,
+    drawFilledRect,
+    drawEmptyRect,
+    clearRect,
+    drawDigit,
+    drawHappySmile,
+    drawSuprisedSmile,
+    drawDeadSmile
 } from './helpers';
 import { GameForm, GameFormInfoPanel, BombsField, DigitsPanel } from './sprites';
 
@@ -128,6 +130,17 @@ export default class MainView {
 
     }
 
+    drawCellPressed(field: BombsField, rowIndex: number, columnIndex: number): void {
+        const cellRect = field.getCellRect(rowIndex, columnIndex);        
+        this.drawRectWithShadow(
+            cellRect,
+            FOREGROUND_COLOR,
+            DARK_CORNER_COLOR,
+            LIGHT_CORNER_COLOR,
+            CELL_SHADOW_WIDTH
+        ); 
+    }
+
     clearCell(field: BombsField, rowIndex: number, columnIndex: number): void {
         const cellRect = field.getCellRect(rowIndex, columnIndex);
         clearRect(this._context, cellRect);
@@ -168,6 +181,8 @@ export default class MainView {
         );
 
         drawHappySmile(this._context, rect);
+        // drawSuprisedSmile(this._context, rect);
+        // drawDeadSmile(this._context, rect);
     }
 
     get canvasRect (): DOMRect {

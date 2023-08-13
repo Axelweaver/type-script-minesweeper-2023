@@ -15,7 +15,7 @@ export default function calcInfoPanelRect(
         const rect: IRectangle = {
         positionX: formPositionX + SIDE_PANEL_PADDING + FORM_SHADOW_WIDTH,
         positionY: formPositionY + TOP_PANEL_PADDING + FORM_SHADOW_WIDTH,
-        width: CELL_SIZE * columnsCount + FORM_SHADOW_WIDTH * 2,
+        width: (CELL_SIZE + 1) * columnsCount + FORM_SHADOW_WIDTH * 2,
         height: TOP_INFO_HEIGHT
     };
 

@@ -15,8 +15,8 @@ export default function calcFormRect (
         const rect: IRectangle = {
             positionX: 0,
             positionY: 0,
-            width: CELL_SIZE * columnsCount + SIDE_PANEL_PADDING * 2 + FORM_SHADOW_WIDTH * 4,
-            height: CELL_SIZE * rowsCount + TOP_PANEL_PADDING * 3 + TOP_INFO_HEIGHT 
+            width: (CELL_SIZE + 1) * columnsCount + SIDE_PANEL_PADDING * 2 + FORM_SHADOW_WIDTH * 4,
+            height: (CELL_SIZE + 1) * rowsCount + TOP_PANEL_PADDING * 3 + TOP_INFO_HEIGHT 
             + FORM_SHADOW_WIDTH * 4
         };
 

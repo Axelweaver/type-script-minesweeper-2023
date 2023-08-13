@@ -8,8 +8,8 @@ export default function calcCellRect(
     columnIndex: number
 ): IRectangle {
     return {
-        positionX: fieldPositionX + FORM_SHADOW_WIDTH + CELL_SIZE * columnIndex,
-        positionY: fieldPositionY + FORM_SHADOW_WIDTH + CELL_SIZE * rowIndex,
+        positionX: fieldPositionX + FORM_SHADOW_WIDTH + (CELL_SIZE + 1) * columnIndex,
+        positionY: fieldPositionY + FORM_SHADOW_WIDTH + (CELL_SIZE + 1) * rowIndex,
         width: CELL_SIZE,
         height: CELL_SIZE
     };
