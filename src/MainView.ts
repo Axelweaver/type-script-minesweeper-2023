@@ -6,10 +6,11 @@ import {
     DARK_CORNER_COLOR,
     FORM_SHADOW_WIDTH,
     CELL_SHADOW_WIDTH,
-    CELL_BORDER_COLOR
+    CELL_BORDER_COLOR,
+    COUNTER_BACKGROUND_COLOR
 } from './setup';
 import { drawCorner, drawFilledRect, drawEmptyRect, clearRect, drawDigit } from './helpers';
-import { GameForm, GameFormInfoPanel, BombsField } from './sprites';
+import { GameForm, GameFormInfoPanel, BombsField, DigitsPanel } from './sprites';
 
 export default class MainView {
     canvas: HTMLCanvasElement;
@@ -63,6 +64,8 @@ export default class MainView {
             LIGHT_CORNER_COLOR,
             FORM_SHADOW_WIDTH                      
         );
+        this.drawDigitsPanel(panel.bombsCounter);
+        this.drawDigitsPanel(panel.timer);
     }
 
     drawBombsField(field: BombsField): void {
@@ -119,6 +122,27 @@ export default class MainView {
     clearCell(field: BombsField, rowIndex: number, columnIndex: number): void {
         const cellRect = field.getCellRect(rowIndex, columnIndex);
         clearRect(this._context, cellRect);
+    }
+
+    clearRect(rect: IRectangle):void {
+        clearRect(this._context, rect);
+    }
+
+    drawDigitsPanel(panel: DigitsPanel): void {
+        this.drawRectWithShadow(
+            panel.rect,
+            COUNTER_BACKGROUND_COLOR,
+            DARK_CORNER_COLOR,
+            LIGHT_CORNER_COLOR,
+            1
+        );
+        this.drawDigits(panel.digitRects, panel.values);
+    }
+
+    drawDigits(rects: IRectangle[], digits: number[]): void {
+        rects.forEach((row: IRectangle, rowIndex: number): void => {
+            drawDigit(this._context, row, digits[rowIndex]);
+        });
     }
 
     drawDigit(rect: IRectangle, digit: number): void {

@@ -1,6 +1,5 @@
 import { ENABLED_DIGIT_COLOR, DISABLED_DIGIT_COLOR } from '../setup';
 import { IRectangle } from '../types';
-import { drawEmptyRect } from './';
 
 export default function drawDigit(
     context: CanvasRenderingContext2D | null,
@@ -8,7 +7,6 @@ export default function drawDigit(
     digit: number
     ): void {
 
-    drawEmptyRect(context, rect, '#ccc');
     const sectionAcolor = digit !== 1 && digit !== 4
         ? ENABLED_DIGIT_COLOR
         : DISABLED_DIGIT_COLOR;
@@ -26,7 +24,7 @@ export default function drawDigit(
         : DISABLED_DIGIT_COLOR;
 
     const sectionEcolor = digit !== 1 && digit !== 3 && digit !== 4 &&
-        digit !== 5 && digit !== 7
+        digit !== 5 && digit !== 7 && digit !== 9
         ? ENABLED_DIGIT_COLOR
         : DISABLED_DIGIT_COLOR;
     
@@ -49,7 +47,7 @@ export default function drawDigit(
     ];
 
     const sidePadding = rect.width / 8;
-    const sectionWidth = sidePadding;
+    const sectionWidth = rect.width / 7;
     const sectionPadding = 2;
     const halfHeight = rect.height / 2;
 
@@ -57,7 +55,7 @@ export default function drawDigit(
         [
             // section A
             [
-                rect.positionX + sidePadding + sectionPadding,
+                rect.positionX + sidePadding,
                 rect.positionY + sidePadding
             ],
             [
@@ -73,7 +71,7 @@ export default function drawDigit(
                 rect.positionY + sidePadding + sectionWidth
             ],
             [
-                rect.positionX + sidePadding + sectionPadding,
+                rect.positionX + sidePadding,
                 rect.positionY + sidePadding 
             ]
         ],
@@ -83,13 +81,13 @@ export default function drawDigit(
                 rect.positionX + rect.width - sidePadding,
                 rect.positionY + sidePadding
             ],
-            [
+            [ //
                 rect.positionX + rect.width - sidePadding,
-                rect.positionY + sidePadding + halfHeight - sectionPadding
+                rect.positionY + halfHeight - sectionPadding
             ],
             [
                 rect.positionX + rect.width - sidePadding - sectionWidth,
-                rect.positionY + sidePadding + halfHeight - sectionPadding - sectionWidth
+                rect.positionY + halfHeight - sectionPadding - sectionWidth
             ],
             [
                 rect.positionX + rect.width - sidePadding - sectionWidth,
@@ -104,7 +102,7 @@ export default function drawDigit(
         [
             [
                 rect.positionX + rect.width - sidePadding,
-                rect.positionY + sidePadding + halfHeight
+                rect.positionY + halfHeight + sectionPadding
             ],
             [
                 rect.positionX + rect.width - sidePadding,
@@ -120,7 +118,7 @@ export default function drawDigit(
             ],
             [
                 rect.positionX + rect.width - sidePadding,
-                rect.positionY + sidePadding + halfHeight                
+                rect.positionY + halfHeight + sectionPadding               
             ]
         ],
         // section D
@@ -154,11 +152,11 @@ export default function drawDigit(
             ],
             [
                 rect.positionX + sidePadding,
-                rect.positionY + halfHeight + sectionPadding * 2
+                rect.positionY + halfHeight + sectionPadding
             ],
             [
                 rect.positionX + sidePadding + sectionWidth,
-                rect.positionY + halfHeight + sectionPadding * 2 + sectionWidth
+                rect.positionY + halfHeight + sectionPadding + sectionWidth
             ],
             [
                 rect.positionX + sidePadding + sectionWidth,
@@ -199,24 +197,24 @@ export default function drawDigit(
                 rect.positionY + halfHeight
             ],
             [
-                rect.positionX + sidePadding + sectionPadding + sectionWidth / 2,
+                rect.positionX + sidePadding + sectionWidth,
                 rect.positionY + halfHeight - sectionWidth / 2
             ],
             [
-                rect.positionX + rect.width - sidePadding - sectionPadding * 2 - sectionWidth,
+                rect.positionX + rect.width - sidePadding - sectionPadding - sectionWidth,
                 rect.positionY + halfHeight - sectionWidth / 2                
             ],
-            [
-                rect.positionX + rect.width - sidePadding - sectionPadding * 2 + sectionWidth,
-                rect.positionY + halfHeight + sectionWidth / 2 
+            [ //
+                rect.positionX + rect.width - sidePadding,
+                rect.positionY + halfHeight
             ],
             [
-                rect.positionX + rect.width - sidePadding - sectionPadding * 2 - sectionWidth,
-                rect.positionY + halfHeight + sectionWidth 
+                rect.positionX + rect.width - sidePadding - sectionPadding - sectionWidth,
+                rect.positionY + halfHeight + sectionWidth / 2
             ],
             [
-                rect.positionX + sidePadding + sectionPadding + sectionWidth,
-                rect.positionY + halfHeight + sectionWidth 
+                rect.positionX + sidePadding + sectionWidth,
+                rect.positionY + halfHeight + sectionWidth / 2
             ],
             [
                 rect.positionX + sidePadding,
@@ -238,28 +236,4 @@ export default function drawDigit(
         }
         context.fill();
     }
-
-    // context.fillStyle = sectionBcolor;
-    // context.beginPath();
-    // context.moveTo(
-    //     rect.positionX + rect.width - sidePadding,
-    //     rect.positionY + sidePadding
-    // );
-    // context.lineTo(
-    //     rect.positionX + rect.width - sidePadding,
-    //     rect.positionY + sidePadding + halfHeight - sectionPadding
-    // );
-    // context.lineTo(
-    //     rect.positionX + rect.width - sidePadding - sectionWidth,
-    //     rect.positionY + sidePadding + halfHeight - sectionPadding - sectionWidth
-    // );
-    // context.lineTo(
-    //     rect.positionX + rect.width - sidePadding - sectionWidth,
-    //     rect.positionY + sidePadding + sectionWidth
-    // );
-    // context.lineTo(
-    //     rect.positionX + rect.width - sidePadding,
-    //     rect.positionY + sidePadding       
-    // );
-    // context.fill();
 }

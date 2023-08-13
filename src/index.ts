@@ -9,7 +9,8 @@ const gameForm = new GameForm(
     view.canvas.width,
     view.canvas.height,
     9,
-    9
+    9,
+    10
 );
 
 view.drawGameForm(gameForm);
@@ -26,23 +27,10 @@ const clickFunc = (x: number, y: number): void => {
 
     }
 }
-
-// view.canvas.addEventListener('click', clickHanlder.getEventHadler(
-//     (x: number, y: number): void => {
-//         console.log(x, y);
-//         console.log(gameForm.bombsField.clickHanlder(x, y));
-//     }
-// ));
-
+const interval = setInterval(function(){
+    gameForm.infoPanel.timer.increase();
+    view.clearRect(gameForm.infoPanel.timer.rect);
+    view.drawDigitsPanel(gameForm.infoPanel.timer);
+},1000);
 view.canvas.addEventListener('click', clickHanlder.getEventHadler(clickFunc));
-for(let i = 0; i < 10; ++i) {
-    view.drawDigit(
-        {
-            positionX: 20 + 30 * i,
-            positionY: 20,
-            width: 30,
-            height: 60
-        },
-        i
-    );    
-}
+

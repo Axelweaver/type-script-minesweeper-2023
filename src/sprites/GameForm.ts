@@ -6,11 +6,14 @@ export default class GameForm {
     readonly rect: IRectangle;
     readonly infoPanel: GameFormInfoPanel;
     readonly bombsField: BombsField;
+
     constructor(
         canvasWidth: number, 
         canvasHeight: number, 
         rowsCount: number, 
-        columnsCount: number) {
+        columnsCount: number,
+        bombsCount: number
+        ) {
         
             this.rect = calcFormRect(
                 canvasWidth, 
@@ -22,7 +25,8 @@ export default class GameForm {
             this.infoPanel = new GameFormInfoPanel(
                 this.rect.positionX,
                 this.rect.positionY,
-                columnsCount
+                columnsCount,
+                bombsCount
             );
             
             this.bombsField = new BombsField(
