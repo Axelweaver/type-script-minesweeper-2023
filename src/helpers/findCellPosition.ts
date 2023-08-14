@@ -8,10 +8,10 @@ export default function findCellPosition(
     ): CellClickState {
     return {
         rowIndex: Math.floor(
-            (positionY - field.positionY - FORM_SHADOW_WIDTH) / CELL_SIZE
+            (positionY - field.positionY - FORM_SHADOW_WIDTH) / (CELL_SIZE + 1)
         ),
         columnIndex: Math.floor(
-            (positionX - field.positionX - FORM_SHADOW_WIDTH) / CELL_SIZE
+            (positionX - field.positionX - FORM_SHADOW_WIDTH) / (CELL_SIZE + 1)
         ),
         isLeftButton: false,
         state: CellState.Closed

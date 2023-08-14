@@ -101,7 +101,20 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
                 // set default smile button
                 if(!gameOver) {
                     view.clearRect(gameForm.infoPanel.button);
-                    view.drawSmileButton(gameForm.infoPanel.button, SmileButtonState.Happy);
+                    if(gameForm.bombsField.isWin()) {
+                        view.drawSmileButton(
+                            gameForm.infoPanel.button, 
+                            SmileButtonState.CoolFace
+                        ); 
+                        gameOver = true;
+
+                    } else {
+                        view.drawSmileButton(
+                            gameForm.infoPanel.button, 
+                            SmileButtonState.Happy
+                        );
+                        clearInterval(timerIntervalId);
+                    }
                 }
             } else {
 

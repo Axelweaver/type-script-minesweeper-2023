@@ -20,7 +20,6 @@ export interface GameSquare {
 
 export enum CellState {
     Closed,
-    Pressed,
     Digit,
     Bomb,
     CurrentBomb,

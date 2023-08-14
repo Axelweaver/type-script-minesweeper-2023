@@ -6,6 +6,7 @@ import {
     checkClickCollide,
     getRandomNumber
 } from '../helpers';
+import { FORM_SHADOW_WIDTH } from '../setup';
 
 export default class BombsField {
     readonly rect: IRectangle;
@@ -14,7 +15,6 @@ export default class BombsField {
     readonly rowsCount: number;
     readonly columnsCount: number;
     readonly bombsCount: number;
-    private _callsCount: number;
 
     constructor(
         formPositionX: number,
@@ -33,7 +33,6 @@ export default class BombsField {
             columnsCount
         );
         this.reset();
-        this._callsCount = 0;
     }
 
     reset(): void {
@@ -71,6 +70,19 @@ export default class BombsField {
         }
     }
 
+    isWin(): boolean {
+        let openCellsCount = 0;
+        this._cells.forEach(
+            (row: FieldCell[]): void => 
+            row.forEach((column: FieldCell): void => {
+            openCellsCount = column.state === CellState.Empty ||
+                column.state === CellState.Digit
+                ? openCellsCount + 1
+                : openCellsCount;
+        }));
+        return (this.rowsCount * this.columnsCount - openCellsCount) === this.bombsCount;
+    }
+
     isBomb(rowIndex: number, columnIndex: number): boolean {
         if(!this._bombs || !this._bombs.length) {
             return false;
@@ -83,23 +95,16 @@ export default class BombsField {
     }
 
     openCell(rowIndex: number, columnIndex: number): void {
-        console.log('openCell call', ++this._callsCount);
         if(rowIndex < 0 || columnIndex < 0 || 
             rowIndex >= this.rowsCount ||
             columnIndex >= this.columnsCount ||
             this.isBomb(rowIndex, columnIndex)) {
             return;
         }
-
-        console.log('openCell rowIndex: ', rowIndex, 'columnIndex: ', columnIndex);
-        
         const cellState = this.getCellState(rowIndex, columnIndex);
         if(cellState !== CellState.Closed) {
             return;
         }
-        
-        console.log('cell state: ', cellState);
-
         let count = this._bombs.filter((bomb: Bomb): boolean => 
             bomb.rowIndex > rowIndex - 2 &&
             bomb.rowIndex < rowIndex + 2 &&
@@ -111,13 +116,10 @@ export default class BombsField {
             const cell = this._cells[rowIndex][columnIndex];
             cell.state = CellState.Digit;
             cell.value = count;
-            console.log('bombs count around: ', count);
             return;
         }
         // it's empty cell
         this.setCellState(rowIndex, columnIndex, CellState.Empty);
-        console.log('openCell empty', rowIndex, columnIndex, 'count: ', this._callsCount);
-
         const PI = Math.PI;
         let angle = 0;
         while (angle < 2 * PI) {
@@ -153,7 +155,7 @@ export default class BombsField {
     }
 
     isFieldClick(positionX: number, positionY: number): boolean {
-        return checkClickCollide(positionX, positionY, this.rect);
+        return checkClickCollide(positionX, positionY, this.rect, FORM_SHADOW_WIDTH);
     }
 
     clickHanlder(positionX: number, positionY: number): CellClickState {
