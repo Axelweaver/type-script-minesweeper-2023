@@ -1,4 +1,4 @@
-import { IRectangle } from '../types';
+import { type IRectangle } from '../types';
 
 export default function drawFilledRect (
     context: CanvasRenderingContext2D | null,
@@ -9,9 +9,9 @@ export default function drawFilledRect (
     }
     context.fillStyle = color;
     context.fillRect(
-        rect.positionX, 
-        rect.positionY, 
-        rect.width, 
+        rect.positionX,
+        rect.positionY,
+        rect.width,
         rect.height
     );
 }

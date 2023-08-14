@@ -1,4 +1,4 @@
-import { IRectangle } from '../types';
+import { type IRectangle } from '../types';
 
 export default function drawEmptyRect (
     context: CanvasRenderingContext2D | null,
@@ -12,9 +12,9 @@ export default function drawEmptyRect (
     context.lineWidth = lineWidth;
     context.strokeStyle = color;
     context.strokeRect(
-        rect.positionX, 
-        rect.positionY, 
-        rect.width, 
+        rect.positionX,
+        rect.positionY,
+        rect.width,
         rect.height
     );
 }

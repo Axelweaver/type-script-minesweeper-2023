@@ -1,17 +1,17 @@
 import { calcDigitRect, calcDigitsPanelRect } from '../helpers';
-import { IRectangle } from '../types';
+import { type IRectangle } from '../types';
 
 export default class DigitsPanel {
     readonly rect: IRectangle;
     readonly digitRects: IRectangle[];
     private _value: number;
     private readonly _initialValue: number;
-    constructor(
+    constructor (
         topPanelX: number,
         topPanelY: number,
         topPanelWidth: number,
         initialValue: number = 0,
-        isPositionLeft: boolean = true){
+        isPositionLeft: boolean = true) {
         this._value = initialValue;
         this._initialValue = initialValue;
         this.rect = calcDigitsPanelRect(
@@ -22,7 +22,7 @@ export default class DigitsPanel {
         );
 
         this.digitRects = [];
-        for(let i = 0; i < 3; ++i) {
+        for (let i = 0; i < 3; ++i) {
             this.digitRects.push(
                 calcDigitRect(
                     this.rect.positionX,
@@ -33,23 +33,23 @@ export default class DigitsPanel {
         }
     }
 
-    increase(): void {
+    increase (): void {
         ++this._value;
     }
 
-    decrease(): void {
+    decrease (): void {
         --this._value;
     }
 
-    reset(): void {
+    reset (): void {
         this._value = this._initialValue;
     }
 
-    get values(): number[] {
-        if(this._value < 0) {
+    get values (): number[] {
+        if (this._value < 0) {
             return [0, 0, 0];
         }
-        if(this._value > 999) {
+        if (this._value > 999) {
             return [9, 9, 9];
         }
         const values: number[] = [];

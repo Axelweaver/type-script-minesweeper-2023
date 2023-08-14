@@ -1,11 +1,10 @@
-import { IRectangle } from '../types';
+import { type IRectangle } from '../types';
 import { SMILE_FILL_COLOR } from '../setup';
 
-export default function drawCoolFaceSmile (    
+export default function drawCoolFaceSmile (
     context: CanvasRenderingContext2D | null,
     rect: IRectangle
-    ): void {
-
+): void {
     if (context == null) {
         return;
     }
@@ -32,38 +31,38 @@ export default function drawCoolFaceSmile (
 
     context.fillStyle = '#000';
     context.fillRect(
-        centerX - eyeRadius * 2.4, 
-        centerY - eyeRadius * 1.4, 
-        eyeRadius * 4.7, 
+        centerX - eyeRadius * 2.4,
+        centerY - eyeRadius * 1.4,
+        eyeRadius * 4.7,
         eyeRadius / 2
     );
 
     context.beginPath();
     context.lineWidth = 1;
     context.arc(
-        centerX - smileRadius / 1.6, 
-        centerY - smileRadius / 2, 
-        eyeRadius, 
-        0, 
-        PI, 
+        centerX - smileRadius / 1.6,
+        centerY - smileRadius / 2,
+        eyeRadius,
+        0,
+        PI,
         false);
     context.fill();
 
     context.beginPath();
     context.lineWidth = 1;
     context.arc(
-        centerX + smileRadius / 1.6, 
-        centerY - smileRadius / 2, 
-        eyeRadius, 
-        0, 
-        PI, 
+        centerX + smileRadius / 1.6,
+        centerY - smileRadius / 2,
+        eyeRadius,
+        0,
+        PI,
         false);
     context.fill();
-    
+
     context.lineWidth = 2;
     context.beginPath();
     context.moveTo(
-        centerX - eyeRadius * 2.2, 
+        centerX - eyeRadius * 2.2,
         centerY - eyeRadius * 1.4
     );
     context.lineTo(
@@ -74,7 +73,7 @@ export default function drawCoolFaceSmile (
 
     context.beginPath();
     context.moveTo(
-        centerX + eyeRadius * 2.2, 
+        centerX + eyeRadius * 2.2,
         centerY - eyeRadius * 1.4
     );
     context.lineTo(

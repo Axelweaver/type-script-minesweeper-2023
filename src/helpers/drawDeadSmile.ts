@@ -1,11 +1,10 @@
-import { IRectangle } from '../types';
+import { type IRectangle } from '../types';
 import { SMILE_FILL_COLOR } from '../setup';
 
-export default function drawDeadSmile(    
+export default function drawDeadSmile (
     context: CanvasRenderingContext2D | null,
     rect: IRectangle
-    ): void {
-
+): void {
     if (context == null) {
         return;
     }
@@ -34,39 +33,39 @@ export default function drawDeadSmile(
     context.lineWidth = 1;
 
     context.moveTo(
-        centerX - smileRadius / 2 - eyeLine, 
-        centerY - smileRadius / 2 - eyeLine,       
+        centerX - smileRadius / 2 - eyeLine,
+        centerY - smileRadius / 2 - eyeLine
     );
     context.lineTo(
-        centerX - smileRadius / 2 + eyeLine, 
-        centerY - smileRadius / 2 + eyeLine,        
+        centerX - smileRadius / 2 + eyeLine,
+        centerY - smileRadius / 2 + eyeLine
     );
     context.moveTo(
-        centerX - smileRadius / 2 + eyeLine, 
-        centerY - smileRadius / 2 - eyeLine,       
+        centerX - smileRadius / 2 + eyeLine,
+        centerY - smileRadius / 2 - eyeLine
     );
     context.lineTo(
-        centerX - smileRadius / 2 - eyeLine, 
-        centerY - smileRadius / 2 + eyeLine,        
-    );    
+        centerX - smileRadius / 2 - eyeLine,
+        centerY - smileRadius / 2 + eyeLine
+    );
     context.stroke();
 
     context.beginPath();
     context.moveTo(
-        centerX + smileRadius / 2 - eyeLine, 
-        centerY - smileRadius / 2 - eyeLine,       
+        centerX + smileRadius / 2 - eyeLine,
+        centerY - smileRadius / 2 - eyeLine
     );
     context.lineTo(
-        centerX + smileRadius / 2 + eyeLine, 
-        centerY - smileRadius / 2 + eyeLine,        
+        centerX + smileRadius / 2 + eyeLine,
+        centerY - smileRadius / 2 + eyeLine
     );
     context.moveTo(
-        centerX + smileRadius / 2 + eyeLine, 
-        centerY - smileRadius / 2 - eyeLine,       
+        centerX + smileRadius / 2 + eyeLine,
+        centerY - smileRadius / 2 - eyeLine
     );
     context.lineTo(
-        centerX + smileRadius / 2 - eyeLine, 
-        centerY - smileRadius / 2 + eyeLine,        
-    );    
+        centerX + smileRadius / 2 - eyeLine,
+        centerY - smileRadius / 2 + eyeLine
+    );
     context.stroke();
 }

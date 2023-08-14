@@ -1,6 +1,6 @@
-import { IRectangle, FieldCell, CellState, SmileButtonState } from './types';
-import { 
-    CANVAS_ID, 
+import { type IRectangle, type FieldCell, CellState, SmileButtonState } from './types';
+import {
+    CANVAS_ID,
     FOREGROUND_COLOR,
     LIGHT_CORNER_COLOR,
     DARK_CORNER_COLOR,
@@ -10,7 +10,7 @@ import {
     COUNTER_BACKGROUND_COLOR,
     BUTTON_SHADOW_WIDTH
 } from './setup';
-import { 
+import {
     drawCorner,
     drawFilledRect,
     drawEmptyRect,
@@ -25,7 +25,7 @@ import {
     drawCellDigit,
     drawText
 } from './helpers';
-import { GameForm, GameFormInfoPanel, BombsField, DigitsPanel } from './sprites';
+import { type GameForm, type GameFormInfoPanel, type BombsField, type DigitsPanel } from './sprites';
 
 export default class MainView {
     canvas: HTMLCanvasElement;
@@ -37,23 +37,24 @@ export default class MainView {
 
         drawText(
             this._context,
-            { positionX: -30,
+            {
+                positionX: -30,
                 positionY: -30,
                 fontSize: 16,
                 font: '16px Minesweeper',
-                align: 'left'},
+                align: 'left'
+            },
             '#000',
             'Start game!'
-        )
+        );
     }
 
-    drawRectWithShadow(
-        rect: IRectangle, 
-        color: string, 
-        shadowColor1: string, 
+    drawRectWithShadow (
+        rect: IRectangle,
+        color: string,
+        shadowColor1: string,
         shadowColor2: string,
         shadowWidth: number): void {
-
         drawFilledRect(
             this._context,
             rect,
@@ -69,51 +70,51 @@ export default class MainView {
         );
     }
 
-    drawGameForm(form: GameForm): void {
+    drawGameForm (form: GameForm): void {
         this.drawRectWithShadow(
             form.rect,
             FOREGROUND_COLOR,
             LIGHT_CORNER_COLOR,
             DARK_CORNER_COLOR,
-            FORM_SHADOW_WIDTH            
+            FORM_SHADOW_WIDTH
         );
         this.drawInfoPanel(form.infoPanel);
         this.drawBombsField(form.bombsField);
     }
 
-    drawInfoPanel(panel: GameFormInfoPanel): void {
+    drawInfoPanel (panel: GameFormInfoPanel): void {
         this.drawRectWithShadow(
             panel.rect,
             FOREGROUND_COLOR,
             DARK_CORNER_COLOR,
             LIGHT_CORNER_COLOR,
-            FORM_SHADOW_WIDTH                      
+            FORM_SHADOW_WIDTH
         );
         this.drawDigitsPanel(panel.bombsCounter);
         this.drawDigitsPanel(panel.timer);
         this.drawSmileButton(panel.button);
     }
 
-    drawBombsField(field: BombsField): void {
+    drawBombsField (field: BombsField): void {
         this.drawRectWithShadow(
             field.rect,
             FOREGROUND_COLOR,
             DARK_CORNER_COLOR,
             LIGHT_CORNER_COLOR,
-            FORM_SHADOW_WIDTH            
+            FORM_SHADOW_WIDTH
         );
         this.drawCells(field);
     }
 
-    drawCells(field: BombsField): void {
+    drawCells (field: BombsField): void {
         field.cells.forEach((row: FieldCell[], rowIndex: number): void => {
-            row.forEach((column: FieldCell, columnIndex: number): void => {
+            row.forEach((_column: FieldCell, columnIndex: number): void => {
                 this.drawCell(field, rowIndex, columnIndex);
             });
         });
     }
 
-    drawCell(field: BombsField, rowIndex: number, columnIndex: number): void {
+    drawCell (field: BombsField, rowIndex: number, columnIndex: number): void {
         const cellRect = field.getCellRect(rowIndex, columnIndex);
         const cell = field.cells[rowIndex][columnIndex];
         const drawCellButton = (): void => {
@@ -123,7 +124,7 @@ export default class MainView {
                 LIGHT_CORNER_COLOR,
                 DARK_CORNER_COLOR,
                 CELL_SHADOW_WIDTH
-            );             
+            );
         };
         const drawEmptyCell = (color: string): void => {
             drawFilledRect(
@@ -159,33 +160,33 @@ export default class MainView {
             case CellState.Digit:
                 drawEmptyCell(FOREGROUND_COLOR);
                 drawCellDigit(this._context, cellRect, cell.value);
+                break;
             default:
                 break;
         }
-
     }
 
-    drawCellPressed(field: BombsField, rowIndex: number, columnIndex: number): void {
-        const cellRect = field.getCellRect(rowIndex, columnIndex);        
+    drawCellPressed (field: BombsField, rowIndex: number, columnIndex: number): void {
+        const cellRect = field.getCellRect(rowIndex, columnIndex);
         this.drawRectWithShadow(
             cellRect,
             FOREGROUND_COLOR,
             DARK_CORNER_COLOR,
             LIGHT_CORNER_COLOR,
             CELL_SHADOW_WIDTH
-        ); 
+        );
     }
 
-    clearCell(field: BombsField, rowIndex: number, columnIndex: number): void {
+    clearCell (field: BombsField, rowIndex: number, columnIndex: number): void {
         const cellRect = field.getCellRect(rowIndex, columnIndex);
         clearRect(this._context, cellRect);
     }
 
-    clearRect(rect: IRectangle):void {
+    clearRect (rect: IRectangle): void {
         clearRect(this._context, rect);
     }
 
-    drawDigitsPanel(panel: DigitsPanel): void {
+    drawDigitsPanel (panel: DigitsPanel): void {
         this.drawRectWithShadow(
             panel.rect,
             COUNTER_BACKGROUND_COLOR,
@@ -196,20 +197,20 @@ export default class MainView {
         this.drawDigits(panel.digitRects, panel.values);
     }
 
-    drawDigits(rects: IRectangle[], digits: number[]): void {
+    drawDigits (rects: IRectangle[], digits: number[]): void {
         rects.forEach((row: IRectangle, rowIndex: number): void => {
             drawDigit(this._context, row, digits[rowIndex]);
         });
     }
 
-    drawDigit(rect: IRectangle, digit: number): void {
+    drawDigit (rect: IRectangle, digit: number): void {
         drawDigit(this._context, rect, digit);
     }
 
-    drawSmileButton(
-        rect: IRectangle, 
+    drawSmileButton (
+        rect: IRectangle,
         state: SmileButtonState = SmileButtonState.Happy
-        ): void {
+    ): void {
         this.drawRectWithShadow(
             rect,
             FOREGROUND_COLOR,
@@ -218,7 +219,7 @@ export default class MainView {
             BUTTON_SHADOW_WIDTH
         );
 
-        switch(state) {
+        switch (state) {
             case SmileButtonState.Happy:
                 drawHappySmile(this._context, rect);
                 break;
@@ -237,7 +238,7 @@ export default class MainView {
         }
     }
 
-    drawSmileButtonPressed(rect: IRectangle): void {
+    drawSmileButtonPressed (rect: IRectangle): void {
         this.drawRectWithShadow(
             rect,
             FOREGROUND_COLOR,
@@ -252,7 +253,7 @@ export default class MainView {
         return this.canvas.getBoundingClientRect();
     }
 
-    get context(): CanvasRenderingContext2D {
+    get context (): CanvasRenderingContext2D | null {
         return this._context;
     }
 }

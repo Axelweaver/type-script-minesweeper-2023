@@ -1,6 +1,7 @@
 import { TOP_INFO_HEIGHT, INFO_PANEL_PADDING } from '../setup';
+import { type IRectangle } from '../types';
 
-export default function calcDigitRect(
+export default function calcDigitRect (
     digitsPanelX: number,
     digitsPanelY: number,
     numberDigit: number

@@ -5,7 +5,7 @@ export default function drawCellDigit (
     context: CanvasRenderingContext2D | null,
     rect: IRectangle,
     digit: number
-    ): void {
+): void {
     if (context == null) {
         return;
     }

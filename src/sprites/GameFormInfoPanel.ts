@@ -1,4 +1,4 @@
-import { IRectangle } from '../types';
+import { type IRectangle } from '../types';
 import { calcInfoPanelRect, checkClickCollide, calcSmileButtonRect } from '../helpers';
 import { DigitsPanel } from '../sprites';
 
@@ -8,12 +8,12 @@ export default class GameFormInfoPanel {
     readonly bombsCounter: DigitsPanel;
     readonly button: IRectangle;
 
-    constructor(
+    constructor (
         formPositionX: number,
         formPositionY: number,
         columnsCount: number,
         bombsCount: number
-        ) {
+    ) {
         this.rect = calcInfoPanelRect(
             formPositionX,
             formPositionY,
@@ -39,7 +39,7 @@ export default class GameFormInfoPanel {
         );
     }
 
-    isButtonClick(positionX: number, positionY: number): boolean {
+    isButtonClick (positionX: number, positionY: number): boolean {
         return checkClickCollide(positionX, positionY, this.rect);
     }
 }

@@ -1,12 +1,11 @@
 import { ENABLED_DIGIT_COLOR, DISABLED_DIGIT_COLOR } from '../setup';
-import { IRectangle } from '../types';
+import { type IRectangle } from '../types';
 
-export default function drawDigit(
+export default function drawDigit (
     context: CanvasRenderingContext2D | null,
     rect: IRectangle,
     digit: number
-    ): void {
-        
+): void {
     if (context == null) {
         return;
     }
@@ -30,7 +29,7 @@ export default function drawDigit(
         digit !== 5 && digit !== 7 && digit !== 9
         ? ENABLED_DIGIT_COLOR
         : DISABLED_DIGIT_COLOR;
-    
+
     const sectionFcolor = digit !== 1 && digit !== 2 && digit !== 3 && digit !== 7
         ? ENABLED_DIGIT_COLOR
         : DISABLED_DIGIT_COLOR;
@@ -62,11 +61,11 @@ export default function drawDigit(
                 rect.positionY + sidePadding
             ],
             [
-                rect.positionX + rect.width - sidePadding - sectionPadding, 
+                rect.positionX + rect.width - sidePadding - sectionPadding,
                 rect.positionY + sidePadding
             ],
             [
-                rect.positionX + rect.width - sidePadding - sectionPadding - sectionWidth, 
+                rect.positionX + rect.width - sidePadding - sectionPadding - sectionWidth,
                 rect.positionY + sidePadding + sectionWidth
             ],
             [
@@ -75,7 +74,7 @@ export default function drawDigit(
             ],
             [
                 rect.positionX + sidePadding,
-                rect.positionY + sidePadding 
+                rect.positionY + sidePadding
             ]
         ],
         // section B
@@ -98,7 +97,7 @@ export default function drawDigit(
             ],
             [
                 rect.positionX + rect.width - sidePadding,
-                rect.positionY + sidePadding 
+                rect.positionY + sidePadding
             ]
         ],
         // section C
@@ -121,7 +120,7 @@ export default function drawDigit(
             ],
             [
                 rect.positionX + rect.width - sidePadding,
-                rect.positionY + halfHeight + sectionPadding               
+                rect.positionY + halfHeight + sectionPadding
             ]
         ],
         // section D
@@ -136,15 +135,15 @@ export default function drawDigit(
             ],
             [
                 rect.positionX + sidePadding + sectionWidth,
-                rect.positionY + rect.height - sidePadding - sectionWidth               
+                rect.positionY + rect.height - sidePadding - sectionWidth
             ],
             [
                 rect.positionX + rect.width - sidePadding - sectionPadding - sectionWidth,
-                rect.positionY + rect.height - sidePadding - sectionWidth  
+                rect.positionY + rect.height - sidePadding - sectionWidth
             ],
             [
                 rect.positionX + rect.width - sidePadding - sectionPadding,
-                rect.positionY + rect.height - sidePadding                
+                rect.positionY + rect.height - sidePadding
             ]
         ],
         // section E
@@ -205,7 +204,7 @@ export default function drawDigit(
             ],
             [
                 rect.positionX + rect.width - sidePadding - sectionPadding - sectionWidth,
-                rect.positionY + halfHeight - sectionWidth / 2                
+                rect.positionY + halfHeight - sectionWidth / 2
             ],
             [ //
                 rect.positionX + rect.width - sidePadding,
@@ -223,19 +222,19 @@ export default function drawDigit(
                 rect.positionX + sidePadding,
                 rect.positionY + halfHeight
             ]
-        ],
+        ]
     ];
 
-    for(let i = 0; i < 7; ++i) {
+    for (let i = 0; i < 7; ++i) {
         context.fillStyle = colors[i];
         context.beginPath();
         context.moveTo(drawing[i][0][0], drawing[i][0][1]);
-        for(let j = 1; j < 5; ++j) {
+        for (let j = 1; j < 5; ++j) {
             context.lineTo(drawing[i][j][0], drawing[i][j][1]);
         }
-        if(i == 6) {
+        if (i === 6) {
             context.lineTo(drawing[i][5][0], drawing[i][5][1]);
-            context.lineTo(drawing[i][6][0], drawing[i][6][1]);            
+            context.lineTo(drawing[i][6][0], drawing[i][6][1]);
         }
         context.fill();
     }

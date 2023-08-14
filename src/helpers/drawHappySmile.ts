@@ -1,11 +1,10 @@
-import { IRectangle } from '../types';
+import { type IRectangle } from '../types';
 import { SMILE_FILL_COLOR } from '../setup';
 
-export default function drawHappySmile(    
+export default function drawHappySmile (
     context: CanvasRenderingContext2D | null,
     rect: IRectangle
-    ): void {
-
+): void {
     if (context == null) {
         return;
     }
@@ -33,22 +32,22 @@ export default function drawHappySmile(
     context.beginPath();
     context.lineWidth = 1;
     context.arc(
-        centerX - smileRadius / 2, 
-        centerY - smileRadius / 2, 
-        eyeRadius, 
-        0, 
-        2 * Math.PI, 
+        centerX - smileRadius / 2,
+        centerY - smileRadius / 2,
+        eyeRadius,
+        0,
+        2 * Math.PI,
         false);
     context.fill();
 
     context.beginPath();
     context.lineWidth = 1;
     context.arc(
-        centerX + smileRadius / 2, 
-        centerY - smileRadius / 2, 
-        eyeRadius, 
-        0, 
-        2 * Math.PI, 
+        centerX + smileRadius / 2,
+        centerY - smileRadius / 2,
+        eyeRadius,
+        0,
+        2 * Math.PI,
         false);
     context.fill();
 }

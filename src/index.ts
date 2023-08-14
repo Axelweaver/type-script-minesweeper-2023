@@ -1,9 +1,7 @@
 import MainView from './MainView';
 import { GameForm } from './sprites';
 import MouseClickHandler from './MouseClickHandler';
-import { CellState, CellClickState, SmileButtonState } from './types';
-import { drawCorner, drawFilledRect, drawCellFlag} from './helpers';
-// import MINESWEEPER_FONT from './css/fonts/mine-sweeper.otf';
+import { CellState, type CellClickState, SmileButtonState } from './types';
 
 const view = new MainView();
 const clickHanlder = new MouseClickHandler(view.canvasRect);
@@ -16,8 +14,9 @@ const gameForm = new GameForm(
 );
 
 view.drawGameForm(gameForm);
+// game variables
 let hasFirstClick = false;
-let lastClickCell: CellClickState;
+let lastClickCell: CellClickState | null;
 let isSmileClick = false;
 let timerIntervalId = 0;
 let gameOver = false;
@@ -28,21 +27,21 @@ const timerTickFunc = (): void => {
     view.drawDigitsPanel(gameForm.infoPanel.timer);
 };
 
-// function for down mouse button event 
+// function for down mouse button event
 const mouseDownFunc = (x: number, y: number, isLeftButton: boolean): void => {
-    if(gameForm.infoPanel.isButtonClick(x, y)) {
+    if (gameForm.infoPanel.isButtonClick(x, y)) {
         isSmileClick = true;
         view.clearRect(gameForm.infoPanel.button);
-        view.drawSmileButtonPressed(gameForm.infoPanel.button, SmileButtonState.Surprised);
-        return
+        view.drawSmileButtonPressed(gameForm.infoPanel.button);
+        return;
     }
 
-    if(gameForm.bombsField.isFieldClick(x, y) && !gameOver) {
+    if (gameForm.bombsField.isFieldClick(x, y) && !gameOver) {
         lastClickCell = gameForm.bombsField.clickHanlder(x, y);
-        if(isLeftButton) {
+        if (isLeftButton) {
             // skip it if cell already is opened
-            if(lastClickCell.state !== CellState.Closed) {
-                lastClickCell = undefined;
+            if (lastClickCell.state !== CellState.Closed) {
+                lastClickCell = null;
                 return;
             }
             view.clearCell(gameForm.bombsField, lastClickCell.rowIndex, lastClickCell.columnIndex);
@@ -50,21 +49,20 @@ const mouseDownFunc = (x: number, y: number, isLeftButton: boolean): void => {
             view.clearRect(gameForm.infoPanel.button);
             view.drawSmileButton(gameForm.infoPanel.button, SmileButtonState.Surprised);
         } else {
-            if(lastClickCell.state !== CellState.Closed &&
+            if (lastClickCell.state !== CellState.Closed &&
                 lastClickCell.state !== CellState.Flag) {
-                lastClickCell = undefined;
-                return;
+                lastClickCell = null;
             }
         }
     }
 };
 // function for up mouse button event
 const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
-    if(isSmileClick) {
+    if (isSmileClick) {
         view.clearRect(gameForm.infoPanel.button);
         view.drawSmileButton(gameForm.infoPanel.button);
-        if(gameForm.infoPanel.isButtonClick(x, y) && hasFirstClick) {
-            // start new game
+        if (gameForm.infoPanel.isButtonClick(x, y) && hasFirstClick) {
+            // start new game, reset all counters and bombs
             clearInterval(timerIntervalId);
             gameForm.infoPanel.timer.reset();
             gameForm.bombsField.reset();
@@ -76,17 +74,17 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
         return;
     }
     // if it's after mouse down click
-    if(lastClickCell && !gameOver) {
+    if (lastClickCell !== null && !gameOver) {
         // find cell positions and state
         const cellPos = gameForm.bombsField.clickHanlder(x, y);
-        if(cellPos.rowIndex === lastClickCell.rowIndex &&
+        if (cellPos.rowIndex === lastClickCell.rowIndex &&
             cellPos.columnIndex === lastClickCell.columnIndex) {
-            if(isLeftButton) {
-                if(cellPos.state === CellState.Closed) {
+            if (isLeftButton) {
+                if (cellPos.state === CellState.Closed) {
                     // ooops.. it's a bomb!
-                    if(gameForm.bombsField.isBomb(cellPos.rowIndex, cellPos.columnIndex)) {
+                    if (gameForm.bombsField.isBomb(cellPos.rowIndex, cellPos.columnIndex)) {
                         gameForm.bombsField.openBombs(cellPos.rowIndex, cellPos.columnIndex);
-
+                        // stop the timer
                         clearInterval(timerIntervalId);
                         view.clearRect(gameForm.infoPanel.button);
                         view.drawSmileButton(
@@ -94,42 +92,40 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
                             SmileButtonState.Dead
                         );
                         gameOver = true;
-                    } else if(hasFirstClick) {
+                    } else if (hasFirstClick) {
                         gameForm.bombsField.openCell(cellPos.rowIndex, cellPos.columnIndex);
                     }
                 }
                 // set default smile button
-                if(!gameOver) {
+                if (!gameOver) {
                     view.clearRect(gameForm.infoPanel.button);
-                    if(gameForm.bombsField.isWin()) {
+                    if (gameForm.bombsField.isWin()) {
                         view.drawSmileButton(
-                            gameForm.infoPanel.button, 
+                            gameForm.infoPanel.button,
                             SmileButtonState.CoolFace
-                        ); 
+                        );
                         gameOver = true;
-
                     } else {
                         view.drawSmileButton(
-                            gameForm.infoPanel.button, 
+                            gameForm.infoPanel.button,
                             SmileButtonState.Happy
                         );
                         clearInterval(timerIntervalId);
                     }
                 }
             } else {
-
                 let newState: CellState = CellState.Closed;
 
-                if(lastClickCell.state === CellState.Closed) {
-                   newState = CellState.Flag;
-                   gameForm.infoPanel.bombsCounter.decrease();
+                if (lastClickCell.state === CellState.Closed) {
+                    newState = CellState.Flag;
+                    gameForm.infoPanel.bombsCounter.decrease();
                 }
-                if(lastClickCell.state === CellState.Flag) {
+                if (lastClickCell.state === CellState.Flag) {
                     newState = CellState.Closed;
                     gameForm.infoPanel.bombsCounter.increase();
                 }
 
-                if(newState !== lastClickCell.state) {
+                if (newState !== lastClickCell.state) {
                     view.clearRect(gameForm.infoPanel.bombsCounter.rect);
                     view.drawDigitsPanel(gameForm.infoPanel.bombsCounter);
                 }
@@ -137,9 +133,9 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
                     cellPos.rowIndex,
                     cellPos.columnIndex,
                     newState
-                );                  
+                );
             }
-            if(!hasFirstClick) {
+            if (!hasFirstClick) {
                 hasFirstClick = true;
                 timerIntervalId = setInterval(timerTickFunc, 1000);
                 gameForm.bombsField.createBombs(
@@ -147,16 +143,14 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
                     cellPos.columnIndex
                 );
                 gameForm.bombsField.openCell(cellPos.rowIndex, cellPos.columnIndex);
-                // dev debug show bombs 
-            }   // gameForm.bombsField.openBombs(cellPos.rowIndex, cellPos.columnIndex);
+            }
         }
         // draw changed bomb field
         view.clearRect(gameForm.bombsField.rect);
         view.drawBombsField(gameForm.bombsField);
     }
-
     // reset variables
-    lastClickCell = undefined;
+    lastClickCell = null;
     isSmileClick = false;
 };
 
@@ -164,5 +158,4 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
 view.canvas.addEventListener('mousedown', clickHanlder.getEventHadler(mouseDownFunc));
 view.canvas.addEventListener('mouseup', clickHanlder.getEventHadler(mouseUpFunc));
 // disable the context menu on right mouse button
-view.canvas.oncontextmenu = (e:MouseEvent): void => { e.preventDefault(); };
-
+view.canvas.oncontextmenu = (e: MouseEvent): void => { e.preventDefault(); };

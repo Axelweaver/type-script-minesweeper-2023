@@ -1,4 +1,4 @@
-import { IRectangle } from '../types';
+import { type IRectangle } from '../types';
 
 export default function drawCorner (
     context: CanvasRenderingContext2D | null,
@@ -10,7 +10,7 @@ export default function drawCorner (
         return;
     }
 
-    for(let i = 0; i <= shadowWidth; ++i) {
+    for (let i = 0; i <= shadowWidth; ++i) {
         context.strokeStyle = firstColor;
         context.beginPath();
         context.lineWidth = 1;
