@@ -6,6 +6,8 @@ Minesweeper is a logic puzzle video game genre generally played on personal comp
 The origin of Minesweeper is unclear. According to TechRadar, the first version of the game was 1990's Microsoft Minesweeper, but Eurogamer says Mined-Out by Ian Andrew (1983) was the first Minesweeper game. Curt Johnson, the creator of Microsoft Minesweeper, acknowledges that his game's design was borrowed from another game, but it was not Mined-Out, and he does not remember which game it is.
 [read more..](https://en.wikipedia.org/wiki/Minesweeper_(video_game))
 
+<https://en.wikipedia.org/wiki/Minesweeper_(video_game)>
+
 ![image](https://github.com/Axelweaver/type-script-minesweeper-2023/assets/15805062/d2fdb783-a65b-4262-84e5-45d8b1d8b799)
 
 ![image](https://github.com/Axelweaver/type-script-minesweeper-2023/assets/15805062/184aaf3b-1dd5-47ec-80aa-9068525087a8)
