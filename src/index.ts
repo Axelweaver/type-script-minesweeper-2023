@@ -105,12 +105,12 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
                             SmileButtonState.CoolFace
                         );
                         gameOver = true;
+                        clearInterval(timerIntervalId);
                     } else {
                         view.drawSmileButton(
                             gameForm.infoPanel.button,
                             SmileButtonState.Happy
                         );
-                        clearInterval(timerIntervalId);
                     }
                 }
             } else {
