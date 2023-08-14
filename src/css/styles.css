@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'Cascadia Mono SemiBold';
-  src: url('./fonts/CascadiaMonoPL-SemiBold.otf');
+  font-family: 'Minesweeper';
+  src: url('./fonts/mine-sweeper.otf');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,6 +25,7 @@
   }
 
   canvas {
+    font-family: 'Minessweper';
     z-index: 10;
     border: 1px solid grey;
     background-color: transparent;

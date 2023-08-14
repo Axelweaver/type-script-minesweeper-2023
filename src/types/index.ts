@@ -23,6 +23,7 @@ export enum CellState {
     Pressed,
     Digit,
     Bomb,
+    CurrentBomb,
     Empty,
     Flag,
     Unknown
@@ -46,4 +47,10 @@ export type FieldCell = {
 export type Bomb = {
     rowIndex: number;
     columnIndex: number;
+}
+
+export enum SmileButtonState {
+    Happy,
+    Surprised,
+    Dead
 }

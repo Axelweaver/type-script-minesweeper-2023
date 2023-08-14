@@ -1,10 +1,12 @@
 import MainView from './MainView';
 import { GameForm } from './sprites';
 import MouseClickHandler from './MouseClickHandler';
-import { CellState, CellClickState } from './types';
-// import { drawCellFlag, drawFilledRect } from './helpers';
+import { CellState, CellClickState, SmileButtonState } from './types';
+import { drawCellDigit, drawFilledRect } from './helpers';
+import MINESWEEPER_FONT from './css/fonts/mine-sweeper.otf';
 
 const view = new MainView();
+
 const clickHanlder = new MouseClickHandler(view.canvasRect);
 const gameForm = new GameForm(
     view.canvas.width,
@@ -20,6 +22,7 @@ let lastClickCell: CellClickState;
 let lastLeftClick = false;
 let isSmileClick = false;
 let timerIntervalId = 0;
+let gameOver = false;
 
 const timerTickFunc = (): void => {
     gameForm.infoPanel.timer.increase();
@@ -30,7 +33,7 @@ const timerTickFunc = (): void => {
 const mouseDownFunc = (x: number, y: number, isLeftButton: boolean): void => {
 
     console.log('mouseDownFunc', x, y, isLeftButton);
-    if(gameForm.bombsField.isFieldClick(x, y)) {
+    if(gameForm.bombsField.isFieldClick(x, y) && !gameOver) {
         lastClickCell = gameForm.bombsField.clickHanlder(x, y);
         if(isLeftButton) {
             view.clearCell(gameForm.bombsField, lastClickCell.rowIndex, lastClickCell.columnIndex);
@@ -48,7 +51,7 @@ const mouseDownFunc = (x: number, y: number, isLeftButton: boolean): void => {
 const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
     console.log('mouseUpFunc', x, y, isLeftButton);
     console.log('lastClickCell', lastClickCell);
-    if(lastClickCell) {
+    if(lastClickCell && !gameOver) {
 
         const cellPos = gameForm.bombsField.clickHanlder(x, y);
         console.log('cellPos', cellPos);
@@ -61,18 +64,29 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
                     // cell.state = CellState.Empty;
                     if(gameForm.bombsField.isBomb(cellPos.rowIndex, cellPos.columnIndex)) {
                         console.log('is bomb!', cellPos.rowIndex, cellPos.columnIndex);
+                        gameForm.bombsField.openBombs(cellPos.rowIndex, cellPos.columnIndex);
+
+                        clearInterval(timerIntervalId);
+                        view.clearRect(gameForm.infoPanel.button);
+                        view.drawSmileButton(
+                            gameForm.infoPanel.button,
+                            SmileButtonState.Dead
+                        );
+                        gameOver = true;
+                    } else {
+                        gameForm.bombsField.openCell(cellPos.rowIndex, cellPos.columnIndex);
                     }
 
-                    gameForm.bombsField.setCellState(
-                        cellPos.rowIndex,
-                        cellPos.columnIndex,
-                        CellState.Empty
-                    );
+                    // gameForm.bombsField.setCellState(
+                    //     cellPos.rowIndex,
+                    //     cellPos.columnIndex,
+                    //     CellState.Empty
+                    // );
                 } else {
                     gameForm.bombsField.setCellState(
                         cellPos.rowIndex,
                         cellPos.columnIndex,
-                        CellState.Closed
+                        CellState.Flag
                     );
                 }
 
@@ -86,8 +100,12 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
                 }
             }
         }
-        view.clearCell(gameForm.bombsField, lastClickCell.rowIndex, lastClickCell.columnIndex);
-        view.drawCell(gameForm.bombsField, lastClickCell.rowIndex, lastClickCell.columnIndex);
+        // if(!gameOver) {
+        //     view.clearCell(gameForm.bombsField, lastClickCell.rowIndex, lastClickCell.columnIndex);
+        //     view.drawCell(gameForm.bombsField, lastClickCell.rowIndex, lastClickCell.columnIndex);            
+        // }
+        view.clearRect(gameForm.bombsField.rect);
+        view.drawBombsField(gameForm.bombsField);
     }
     if(isSmileClick) {
         view.clearRect(gameForm.infoPanel.button);
@@ -99,6 +117,7 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
             gameForm.bombsField.reset();
             firstClick = false;
             view.drawGameForm(gameForm);
+            gameOver = false;
         }
     }
     lastClickCell = undefined;
@@ -111,12 +130,18 @@ view.canvas.addEventListener('mousedown', clickHanlder.getEventHadler(mouseDownF
 view.canvas.addEventListener('mouseup', clickHanlder.getEventHadler(mouseUpFunc));
 view.canvas.oncontextmenu = (e:MouseEvent): void => { e.preventDefault(); };
 
-const bombRect = {
+const cellRect = {
     positionX: 30,
     positionY: 30,
-    width: 80,
-    height: 80
+    width: 40,
+    height: 40
 }
 
 // drawFilledRect(view._context, bombRect);
 // drawCellFlag(view._context, bombRect);
+for(let i = 1; i < 9; ++i) {
+    const rect = {...cellRect};
+    rect.positionX = 41 * i;
+    drawFilledRect(view.context, rect, '#ccc');
+    drawCellDigit(view.context, rect, i);
+}

@@ -14,6 +14,17 @@ export const SMILE_FILL_COLOR: string = '#FFFF00';
 export const BOMB_FILL_COLOR: string = '#000';
 export const BOMB_SHADOW_COLOR: string = '#fff';
 export const FLAG_FILL_COLOR: string = '#FF0000';
+export const CELL_DIGIT_COLORS: string[] = [
+    '',
+    '#0000FF',
+    '#228B22',
+    '#B22222',
+    '#191970',
+    '#8B4513',
+    '#40E0D0',
+    '#000',
+    '#FFF'
+];
 
 export const CELL_SIZE: number = 26;
 export const TOP_INFO_HEIGHT: number = 64;

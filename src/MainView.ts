@@ -1,4 +1,4 @@
-import { IRectangle, FieldCell, CellState } from './types';
+import { IRectangle, FieldCell, CellState, SmileButtonState } from './types';
 import { 
     CANVAS_ID, 
     FOREGROUND_COLOR,
@@ -18,7 +18,10 @@ import {
     drawDigit,
     drawHappySmile,
     drawSuprisedSmile,
-    drawDeadSmile
+    drawDeadSmile,
+    drawCellFlag,
+    drawCellBomb,
+    drawCellDigit
 } from './helpers';
 import { GameForm, GameFormInfoPanel, BombsField, DigitsPanel } from './sprites';
 
@@ -102,28 +105,49 @@ export default class MainView {
     drawCell(field: BombsField, rowIndex: number, columnIndex: number): void {
         const cellRect = field.getCellRect(rowIndex, columnIndex);
         const cell = field.cells[rowIndex][columnIndex];
+        const drawCellButton = (): void => {
+            this.drawRectWithShadow(
+                cellRect,
+                FOREGROUND_COLOR,
+                LIGHT_CORNER_COLOR,
+                DARK_CORNER_COLOR,
+                CELL_SHADOW_WIDTH
+            );             
+        };
+        const drawEmptyCell = (color: string): void => {
+            drawFilledRect(
+                this._context,
+                cellRect,
+                color
+            );
+            drawEmptyRect(
+                this._context,
+                cellRect,
+                CELL_BORDER_COLOR
+            );
+        };
         switch (cell.state) {
             case CellState.Closed:
-                this.drawRectWithShadow(
-                    cellRect,
-                    FOREGROUND_COLOR,
-                    LIGHT_CORNER_COLOR,
-                    DARK_CORNER_COLOR,
-                    CELL_SHADOW_WIDTH
-                );                
+                drawCellButton();
                 break;
             case CellState.Empty:
-                drawFilledRect(
-                    this._context,
-                    cellRect,
-                    FOREGROUND_COLOR
-                );
-                drawEmptyRect(
-                    this._context,
-                    cellRect,
-                    CELL_BORDER_COLOR
-                );
+                drawEmptyCell(FOREGROUND_COLOR);
                 break;
+            case CellState.Bomb:
+                drawEmptyCell(FOREGROUND_COLOR);
+                drawCellBomb(this._context, cellRect);
+                break;
+            case CellState.CurrentBomb:
+                drawEmptyCell('#CC0000');
+                drawCellBomb(this._context, cellRect);
+                break;
+            case CellState.Flag:
+                drawCellButton();
+                drawCellFlag(this._context, cellRect);
+                break;
+            case CellState.Digit:
+                drawEmptyCell(FOREGROUND_COLOR);
+                drawCellDigit(this._context, cellRect, cell.value);
             default:
                 break;
         }
@@ -171,7 +195,10 @@ export default class MainView {
         drawDigit(this._context, rect, digit);
     }
 
-    drawSmileButton(rect: IRectangle): void {
+    drawSmileButton(
+        rect: IRectangle, 
+        state: SmileButtonState = SmileButtonState.Happy
+        ): void {
         this.drawRectWithShadow(
             rect,
             FOREGROUND_COLOR,
@@ -180,9 +207,20 @@ export default class MainView {
             BUTTON_SHADOW_WIDTH
         );
 
-        drawHappySmile(this._context, rect);
-        // drawSuprisedSmile(this._context, rect);
-        // drawDeadSmile(this._context, rect);
+        switch(state) {
+            case SmileButtonState.Happy:
+                drawHappySmile(this._context, rect);
+                break;
+            case SmileButtonState.Surprised:
+                drawSuprisedSmile(this._context, rect);
+                break;
+            case SmileButtonState.Dead:
+                drawDeadSmile(this._context, rect);
+                break;
+            default:
+                drawHappySmile(this._context, rect);
+                break;
+        }
     }
 
     drawSmileButtonPressed(rect: IRectangle): void {
@@ -193,10 +231,7 @@ export default class MainView {
             LIGHT_CORNER_COLOR,
             Math.round(BUTTON_SHADOW_WIDTH / 2)
         );
-
-        // drawHappySmile(this._context, rect);
         drawSuprisedSmile(this._context, rect);
-        // drawDeadSmile(this._context, rect);
     }
 
     get canvasRect (): DOMRect {
