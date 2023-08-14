@@ -2,7 +2,7 @@ import MainView from './MainView';
 import { GameForm } from './sprites';
 import MouseClickHandler from './MouseClickHandler';
 import { CellState, CellClickState, SmileButtonState } from './types';
-import { drawCellDigit, drawFilledRect, drawCoolFaceSmile } from './helpers';
+import { drawCorner, drawFilledRect, drawCellFlag} from './helpers';
 // import MINESWEEPER_FONT from './css/fonts/mine-sweeper.otf';
 
 const view = new MainView();
@@ -148,7 +148,7 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
                 );
                 gameForm.bombsField.openCell(cellPos.rowIndex, cellPos.columnIndex);
                 // dev debug show bombs 
-            }   gameForm.bombsField.openBombs(cellPos.rowIndex, cellPos.columnIndex);
+            }   // gameForm.bombsField.openBombs(cellPos.rowIndex, cellPos.columnIndex);
         }
         // draw changed bomb field
         view.clearRect(gameForm.bombsField.rect);
@@ -166,17 +166,3 @@ view.canvas.addEventListener('mouseup', clickHanlder.getEventHadler(mouseUpFunc)
 // disable the context menu on right mouse button
 view.canvas.oncontextmenu = (e:MouseEvent): void => { e.preventDefault(); };
 
-const cellRect = {
-    positionX: 30,
-    positionY: 30,
-    width: 80,
-    height: 80
-}
-drawFilledRect(view.context, cellRect, '#DDD');
-drawCoolFaceSmile(view.context, cellRect);
-// for(let i = 1; i < 9; ++i) {
-//     const rect = {...cellRect};
-//     rect.positionX = 41 * i;
-//     drawFilledRect(view.context, rect, '#ccc');
-//     drawCellDigit(view.context, rect, i);
-// }

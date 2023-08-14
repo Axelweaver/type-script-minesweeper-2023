@@ -19,7 +19,7 @@ export default function drawCellFlag(
     context.strokeStyle = '#000';
     context.beginPath();
     context.moveTo(centerX, centerY + linePadding * .8);
-    context.lineTo(centerX, rect.positionY + rect.height - linePadding);
+    context.lineTo(centerX, rect.positionY + rect.height - linePadding * 2.8);
     context.stroke()
 
     context.fillStyle = '#000';
@@ -27,7 +27,7 @@ export default function drawCellFlag(
         rect.positionX + linePadding * 2.4, 
         rect.positionY + rect.height - linePadding * 3.6, 
         rect.width - linePadding * 4.8, 
-        bottomPadding
+        bottomPadding * .5
     );
 
     context.beginPath();
@@ -53,12 +53,12 @@ export default function drawCellFlag(
     context.fillStyle = FLAG_FILL_COLOR;
     context.moveTo(centerX + rect.width / 22, centerY + linePadding * 1.4);
     context.lineTo(
-        rect.positionX + linePadding,
+        rect.positionX + linePadding * 2,
         centerY - bodyPadding
     );
     context.lineTo(
         centerX  + rect.width / 22,
-        rect.positionY + linePadding 
+        rect.positionY + linePadding * 2
     );
     context.lineTo(centerX + rect.width / 22, centerY + linePadding * 1.4);
     context.fill();
