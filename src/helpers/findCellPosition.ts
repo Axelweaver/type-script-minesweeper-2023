@@ -1,4 +1,4 @@
-import { IRectangle, CellClickState } from '../types';
+import { IRectangle, CellClickState, CellState } from '../types';
 import { FORM_SHADOW_WIDTH, CELL_SIZE } from '../setup';
 
 export default function findCellPosition(
@@ -13,6 +13,7 @@ export default function findCellPosition(
         columnIndex: Math.floor(
             (positionX - field.positionX - FORM_SHADOW_WIDTH) / CELL_SIZE
         ),
-        isLeftButton: false
+        isLeftButton: false,
+        state: CellState.Closed
     }
 }

@@ -19,9 +19,11 @@ import {
     drawHappySmile,
     drawSuprisedSmile,
     drawDeadSmile,
+    drawCoolFaceSmile,
     drawCellFlag,
     drawCellBomb,
-    drawCellDigit
+    drawCellDigit,
+    drawText
 } from './helpers';
 import { GameForm, GameFormInfoPanel, BombsField, DigitsPanel } from './sprites';
 
@@ -33,6 +35,16 @@ export default class MainView {
         this.canvas = document.querySelector(CANVAS_ID) as HTMLCanvasElement;
         this._context = this.canvas.getContext('2d');
 
+        drawText(
+            this._context,
+            { positionX: -30,
+                positionY: -30,
+                fontSize: 16,
+                font: '16px Minesweeper',
+                align: 'left'},
+            '#000',
+            'Start game!'
+        )
     }
 
     drawRectWithShadow(
@@ -90,7 +102,6 @@ export default class MainView {
             LIGHT_CORNER_COLOR,
             FORM_SHADOW_WIDTH            
         );
-
         this.drawCells(field);
     }
 
@@ -216,6 +227,9 @@ export default class MainView {
                 break;
             case SmileButtonState.Dead:
                 drawDeadSmile(this._context, rect);
+                break;
+            case SmileButtonState.CoolFace:
+                drawCoolFaceSmile(this._context, rect);
                 break;
             default:
                 drawHappySmile(this._context, rect);

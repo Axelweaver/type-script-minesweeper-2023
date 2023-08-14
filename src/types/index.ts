@@ -33,6 +33,7 @@ export type CellClickState = {
     rowIndex: number;
     columnIndex: number;
     isLeftButton: boolean;
+    state: CellState;
 }
 
 export type ClickFunc = (x: number, y: number, isLeftButton: boolean) => void;
@@ -52,5 +53,6 @@ export type Bomb = {
 export enum SmileButtonState {
     Happy,
     Surprised,
-    Dead
+    Dead,
+    CoolFace
 }

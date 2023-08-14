@@ -14,6 +14,7 @@ export default class BombsField {
     readonly rowsCount: number;
     readonly columnsCount: number;
     readonly bombsCount: number;
+    private _callsCount: number;
 
     constructor(
         formPositionX: number,
@@ -32,6 +33,7 @@ export default class BombsField {
             columnsCount
         );
         this.reset();
+        this._callsCount = 0;
     }
 
     reset(): void {
@@ -81,58 +83,56 @@ export default class BombsField {
     }
 
     openCell(rowIndex: number, columnIndex: number): void {
+        console.log('openCell call', ++this._callsCount);
         if(rowIndex < 0 || columnIndex < 0 || 
             rowIndex >= this.rowsCount ||
-            columnIndex >= this.columnsCount) {
+            columnIndex >= this.columnsCount ||
+            this.isBomb(rowIndex, columnIndex)) {
             return;
         }
-        console.log('openCell', rowIndex, columnIndex);
-        const cell = this._cells[rowIndex][columnIndex];
 
-        if(cell.state !== CellState.Closed) {
+        console.log('openCell rowIndex: ', rowIndex, 'columnIndex: ', columnIndex);
+        
+        const cellState = this.getCellState(rowIndex, columnIndex);
+        if(cellState !== CellState.Closed) {
             return;
         }
         
-        console.log('cell state: ', cell.state);
+        console.log('cell state: ', cellState);
 
-        let count = 0;
-
-        this._bombs.forEach((bomb: Bomb): void => {
-            if(bomb.rowIndex > rowIndex - 2 &&
-                bomb.rowIndex < rowIndex + 2 &&
-                bomb.columnIndex > columnIndex - 2 &&
-                bomb.columnIndex < columnIndex + 2) {
-                    ++count;
-                }
-        });
-
+        let count = this._bombs.filter((bomb: Bomb): boolean => 
+            bomb.rowIndex > rowIndex - 2 &&
+            bomb.rowIndex < rowIndex + 2 &&
+            bomb.columnIndex > columnIndex - 2 &&
+            bomb.columnIndex < columnIndex + 2
+            ).length;
 
         if(count > 0) {
+            const cell = this._cells[rowIndex][columnIndex];
             cell.state = CellState.Digit;
             cell.value = count;
             console.log('bombs count around: ', count);
             return;
         }
-        cell.state = CellState.Empty;
-        console.log('openCell empty', rowIndex, columnIndex, 'count: ', count);
-        this.checkAround(rowIndex, columnIndex);
+        // it's empty cell
+        this.setCellState(rowIndex, columnIndex, CellState.Empty);
+        console.log('openCell empty', rowIndex, columnIndex, 'count: ', this._callsCount);
+
+        const PI = Math.PI;
+        let angle = 0;
+        while (angle < 2 * PI) {
+            const ri = rowIndex + Math.round(Math.sin(angle));
+            const ci = columnIndex + Math.round(Math.cos(angle));
+            if(ri >= 0 && ri < this.rowsCount && ci >=0 && ci < this.columnsCount &&
+                this.getCellState(ri, ci) === CellState.Closed) {
+                this.openCell(ri, ci);
+            }
+            angle += PI / 4;
+        }
     }
 
-    checkAround(rowIndex: number, columnIndex: number): void {
-        for (let i = rowIndex - 1; i < rowIndex + 2; ++i) {
-            for (let j = columnIndex - 1; j < columnIndex + 2; ++j) {
-                if(i < 0 || j < 0 || i >= this.rowsCount ||
-                    j >= this.columnsCount ||
-                    rowIndex === i && columnIndex === j) {
-                    continue;
-                }
-                this.openCell(i, j);
-                // const openCellFunc = (): void => {
-                //     this.openCell(i, j).bind(this);
-                // };                
-                // setTimeout(openCellFunc, 1);
-            }
-        }
+    getCellState(rowIndex: number, columnIndex: number): CellState {
+        return this._cells[rowIndex][columnIndex].state;
     }
 
     openBombs(rowIndex: number, columnIndex: number): void {
@@ -141,9 +141,12 @@ export default class BombsField {
             if(cell.state !== CellState.Bomb) {
                 cell.state = CellState.Bomb;
             }
+            if(bomb.rowIndex == rowIndex &&
+                bomb.columnIndex == columnIndex) {
+                cell.state = CellState.CurrentBomb;
+            }
         });
-        this._cells[rowIndex][columnIndex].state = CellState.CurrentBomb;
-    }
+     }
 
     setCellState(rowIndex: number, columnIndex: number, state: CellState): void {
         this._cells[rowIndex][columnIndex].state = state;
@@ -154,13 +157,13 @@ export default class BombsField {
     }
 
     clickHanlder(positionX: number, positionY: number): CellClickState {
-        const position = findCellPosition(
+        const cellState = findCellPosition(
             positionX,
             positionY,
             this.rect
         );
-
-        return position;
+        cellState.state = this.getCellState(cellState.rowIndex, cellState.columnIndex);
+        return cellState;
     }
 
     getCellRect(rowIndex: number, columnIndex: number): IRectangle {
