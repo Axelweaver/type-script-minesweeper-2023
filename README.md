@@ -8,6 +8,11 @@ The origin of Minesweeper is unclear. According to TechRadar, the first version 
 
 <https://en.wikipedia.org/wiki/Minesweeper_(video_game)>
 
+# [Try to play!](https://axelweaver.github.io/type-script-minesweeper-2023/)
+
+<https://axelweaver.github.io/type-script-minesweeper-2023/>
+
+
 ![image](https://github.com/Axelweaver/type-script-minesweeper-2023/assets/15805062/d2fdb783-a65b-4262-84e5-45d8b1d8b799)
 
 ![image](https://github.com/Axelweaver/type-script-minesweeper-2023/assets/15805062/184aaf3b-1dd5-47ec-80aa-9068525087a8)
