@@ -36,4 +36,10 @@ export default class GameForm {
             bombsCount
         );
     }
+
+    reset (): void {
+        this.infoPanel.timer.reset();
+        this.infoPanel.bombsCounter.reset();
+        this.bombsField.reset();
+    }
 }

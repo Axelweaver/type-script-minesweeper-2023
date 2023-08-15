@@ -64,8 +64,7 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
         if (gameForm.infoPanel.isButtonClick(x, y) && hasFirstClick) {
             // start new game, reset all counters and bombs
             clearInterval(timerIntervalId);
-            gameForm.infoPanel.timer.reset();
-            gameForm.bombsField.reset();
+            gameForm.reset();
             hasFirstClick = false;
             view.drawGameForm(gameForm);
             gameOver = false;
