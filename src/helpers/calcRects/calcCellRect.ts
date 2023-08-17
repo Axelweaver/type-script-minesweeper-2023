@@ -1,5 +1,5 @@
-import { type IRectangle } from '../types';
-import { CELL_SIZE, FORM_SHADOW_WIDTH } from '../setup';
+import { type IRectangle } from 'types';
+import { CELL_SIZE, FORM_SHADOW_WIDTH } from 'setup';
 
 export default function calcCellRect (
     fieldPositionX: number,

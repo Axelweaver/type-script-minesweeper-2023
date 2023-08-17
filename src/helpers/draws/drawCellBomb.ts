@@ -1,5 +1,5 @@
-import { type IRectangle } from '../types';
-import { BOMB_FILL_COLOR, BOMB_SHADOW_COLOR } from '../setup';
+import { type IRectangle } from 'types';
+import { BOMB_FILL_COLOR, BOMB_SHADOW_COLOR } from 'setup';
 
 export default function drawCellBomb (
     context: CanvasRenderingContext2D | null,

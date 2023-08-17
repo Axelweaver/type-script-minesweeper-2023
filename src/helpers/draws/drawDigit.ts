@@ -1,5 +1,5 @@
-import { ENABLED_DIGIT_COLOR, DISABLED_DIGIT_COLOR } from '../setup';
-import { type IRectangle } from '../types';
+import { ENABLED_DIGIT_COLOR, DISABLED_DIGIT_COLOR } from 'setup';
+import { type IRectangle } from 'types';
 
 export default function drawDigit (
     context: CanvasRenderingContext2D | null,

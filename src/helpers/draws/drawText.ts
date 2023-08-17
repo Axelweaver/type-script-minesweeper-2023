@@ -1,4 +1,4 @@
-import { type ITextInfo } from '../types';
+import { type ITextInfo } from 'types';
 
 export default function drawText (
     context: CanvasRenderingContext2D | null,

@@ -1,5 +1,5 @@
-import { type IRectangle } from '../types';
-import { CELL_DIGIT_COLORS } from '../setup';
+import { type IRectangle } from 'types';
+import { CELL_DIGIT_COLORS } from 'setup';
 
 export default function drawCellDigit (
     context: CanvasRenderingContext2D | null,

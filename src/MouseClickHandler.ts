@@ -1,4 +1,4 @@
-import { type ClickFunc, type MouseEventHandler } from './types';
+import { type ClickFunc, type MouseEventHandler } from 'types';
 
 export default class MouseClickHandler {
     private readonly _canvasRect: DOMRect;

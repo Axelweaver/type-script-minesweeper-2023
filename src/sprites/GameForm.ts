@@ -1,6 +1,6 @@
-import { type IRectangle } from '../types';
-import { calcFormRect } from '../helpers';
-import { GameFormInfoPanel, BombsField } from '../sprites';
+import { type IRectangle } from 'types';
+import { calcFormRect } from 'helpers';
+import { GameFormInfoPanel, BombsField } from 'sprites';
 
 export default class GameForm {
     readonly rect: IRectangle;

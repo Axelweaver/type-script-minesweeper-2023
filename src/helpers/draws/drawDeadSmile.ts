@@ -1,5 +1,5 @@
-import { type IRectangle } from '../types';
-import { SMILE_FILL_COLOR } from '../setup';
+import { type IRectangle } from 'types';
+import { SMILE_FILL_COLOR } from 'setup';
 
 export default function drawDeadSmile (
     context: CanvasRenderingContext2D | null,

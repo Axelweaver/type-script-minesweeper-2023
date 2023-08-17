@@ -1,5 +1,5 @@
-import { calcDigitRect, calcDigitsPanelRect } from '../helpers';
-import { type IRectangle } from '../types';
+import { calcDigitRect, calcDigitsPanelRect } from 'helpers';
+import { type IRectangle } from 'types';
 
 export default class DigitsPanel {
     readonly rect: IRectangle;

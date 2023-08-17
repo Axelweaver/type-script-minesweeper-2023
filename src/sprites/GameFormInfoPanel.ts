@@ -1,6 +1,6 @@
-import { type IRectangle } from '../types';
-import { calcInfoPanelRect, checkClickCollide, calcSmileButtonRect } from '../helpers';
-import { DigitsPanel } from '../sprites';
+import { type IRectangle } from 'types';
+import { calcInfoPanelRect, checkClickCollide, calcSmileButtonRect } from 'helpers';
+import { DigitsPanel } from 'sprites';
 
 export default class GameFormInfoPanel {
     readonly rect: IRectangle;

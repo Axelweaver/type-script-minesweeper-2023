@@ -1,7 +1,7 @@
 import MainView from './MainView';
-import { GameForm } from './sprites';
+import { GameForm } from 'sprites';
 import MouseClickHandler from './MouseClickHandler';
-import { CellState, type CellClickState, SmileButtonState } from './types';
+import { CellState, type CellClickState, SmileButtonState } from 'types';
 
 const view = new MainView();
 const clickHanlder = new MouseClickHandler(view.canvasRect);

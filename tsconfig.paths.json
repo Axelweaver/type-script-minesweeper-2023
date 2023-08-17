@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "paths": {
+            "types": ["./types"],
+            "setup": ["./setup"],
+            "helpers": ["./helpers"],
+            "sprites": ["./sprites"]
+        }
+    }
+}

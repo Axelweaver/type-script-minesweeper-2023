@@ -1,5 +1,5 @@
-import { type IRectangle } from '../types';
-import { TOP_INFO_HEIGHT, INFO_PANEL_PADDING } from '../setup';
+import { type IRectangle } from 'types';
+import { TOP_INFO_HEIGHT, INFO_PANEL_PADDING } from 'setup';
 
 export default function calcSmileButtonRect (
     topPanelX: number,

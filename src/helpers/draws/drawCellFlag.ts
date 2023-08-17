@@ -1,5 +1,5 @@
-import { type IRectangle } from '../types';
-import { FLAG_FILL_COLOR } from '../setup';
+import { type IRectangle } from 'types';
+import { FLAG_FILL_COLOR } from 'setup';
 
 export default function drawCellFlag (
     context: CanvasRenderingContext2D | null,

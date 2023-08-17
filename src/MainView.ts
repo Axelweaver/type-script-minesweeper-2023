@@ -1,4 +1,4 @@
-import { type IRectangle, type FieldCell, CellState, SmileButtonState } from './types';
+import { type IRectangle, type FieldCell, CellState, SmileButtonState } from 'types';
 import {
     CANVAS_ID,
     FOREGROUND_COLOR,
@@ -9,7 +9,7 @@ import {
     CELL_BORDER_COLOR,
     COUNTER_BACKGROUND_COLOR,
     BUTTON_SHADOW_WIDTH
-} from './setup';
+} from 'setup';
 import {
     drawCorner,
     drawFilledRect,
@@ -24,7 +24,7 @@ import {
     drawCellBomb,
     drawCellDigit,
     drawText
-} from './helpers';
+} from 'helpers';
 import { type GameForm, type GameFormInfoPanel, type BombsField, type DigitsPanel } from './sprites';
 
 export default class MainView {

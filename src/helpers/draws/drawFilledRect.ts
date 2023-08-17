@@ -1,4 +1,4 @@
-import { type IRectangle } from '../types';
+import { type IRectangle } from 'types';
 
 export default function drawFilledRect (
     context: CanvasRenderingContext2D | null,

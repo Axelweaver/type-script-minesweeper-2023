@@ -1,21 +1,22 @@
-import { type IRectangle } from '../types';
+import { type IRectangle } from 'types';
 import {
     TOP_INFO_HEIGHT,
     CELL_SIZE,
     SIDE_PANEL_PADDING,
     TOP_PANEL_PADDING,
     FORM_SHADOW_WIDTH
-} from '../setup';
+} from 'setup';
 
-export default function calcBombsFieldRect (
+export default function calcInfoPanelRect (
     formPositionX: number,
     formPositionY: number,
-    rowsCount: number,
     columnsCount: number): IRectangle {
-    return {
+    const rect: IRectangle = {
         positionX: formPositionX + SIDE_PANEL_PADDING + FORM_SHADOW_WIDTH,
-        positionY: formPositionY + TOP_PANEL_PADDING + TOP_INFO_HEIGHT + FORM_SHADOW_WIDTH * 4,
+        positionY: formPositionY + TOP_PANEL_PADDING + FORM_SHADOW_WIDTH,
         width: (CELL_SIZE + 1) * columnsCount + FORM_SHADOW_WIDTH * 2,
-        height: (CELL_SIZE + 1) * rowsCount + FORM_SHADOW_WIDTH * 2
+        height: TOP_INFO_HEIGHT
     };
+
+    return rect;
 }

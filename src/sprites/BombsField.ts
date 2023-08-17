@@ -1,12 +1,19 @@
-import { type IRectangle, type FieldCell, CellState, type CellClickState, type Bomb } from '../types';
+import {
+    type IRectangle,
+    type FieldCell,
+    CellState,
+    type CellClickState,
+    type Bomb
+} from 'types';
 import {
     calcBombsFieldRect,
     calcCellRect,
     findCellPosition,
     checkClickCollide,
-    getRandomNumber
-} from '../helpers';
-import { FORM_SHADOW_WIDTH } from '../setup';
+    getRandomNumber,
+    checkAround
+} from 'helpers';
+import { FORM_SHADOW_WIDTH } from 'setup';
 
 export default class BombsField {
     readonly rect: IRectangle;
@@ -123,17 +130,29 @@ export default class BombsField {
         }
         // it's empty cell
         this.setCellState(rowIndex, columnIndex, CellState.Empty);
-        const PI = Math.PI;
-        let angle = 0;
-        while (angle < 2 * PI) {
-            const ri = rowIndex + Math.round(Math.sin(angle));
-            const ci = columnIndex + Math.round(Math.cos(angle));
-            if (ri >= 0 && ri < this.rowsCount && ci >= 0 && ci < this.columnsCount &&
-                this.getCellState(ri, ci) === CellState.Closed) {
-                this.openCell(ri, ci);
+        checkAround(
+            rowIndex,
+            columnIndex,
+            this.rowsCount,
+            this.columnsCount,
+            (ri: number, ci: number): void => {
+                if (this.getCellState(ri, ci) === CellState.Closed) {
+                    this.openCell(ri, ci);
+                }
             }
-            angle += PI / 4;
-        }
+        );
+
+        // const PI = Math.PI;
+        // let angle = 0;
+        // while (angle < 2 * PI) {
+        //     const ri = rowIndex + Math.round(Math.sin(angle));
+        //     const ci = columnIndex + Math.round(Math.cos(angle));
+        //     if (ri >= 0 && ri < this.rowsCount && ci >= 0 && ci < this.columnsCount &&
+        //         this.getCellState(ri, ci) === CellState.Closed) {
+        //         this.openCell(ri, ci);
+        //     }
+        //     angle += PI / 4;
+        // }
     }
 
     getCellState (rowIndex: number, columnIndex: number): CellState {
