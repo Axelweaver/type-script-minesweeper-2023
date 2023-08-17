@@ -7,8 +7,7 @@ export default function drawCross (
     if (context == null) {
         return;
     }
-    const linePadding = rect.width / 14;
-    const angleLinePadding = linePadding * 2.8;
+    const angleLinePadding = rect.width / 14;
 
     context.lineWidth = rect.width / 10;
     context.strokeStyle = '#DD0000';

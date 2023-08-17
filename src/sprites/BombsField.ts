@@ -184,15 +184,16 @@ export default class BombsField {
                 cell.state = CellState.CurrentBomb;
             }
         });
-        const flags = this._cells.flatMap(
-            (row: FieldCell[]): any => row.filter(
-                (cell: FieldCell): boolean => cell.state === CellState.Flag
-            )
-        );
-        // flags.forEach((cell: FieldCell): void => {
-
-        // });
-        console.log('open bombs', flags);
+        this._cells.forEach((row: FieldCell[], ri: number): void => {
+            row.forEach((cell: FieldCell, ci: number): void => {
+                if (cell.state === CellState.Flag &&
+                    !this._bombs.some((bomb: Bomb): boolean =>
+                        bomb.rowIndex === ri && bomb.columnIndex === ci
+                    )) {
+                    cell.state = CellState.WrongFlag;
+                }
+            });
+        });
     }
 
     setCellState (rowIndex: number, columnIndex: number, state: CellState): void {
