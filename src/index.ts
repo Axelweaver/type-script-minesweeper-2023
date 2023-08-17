@@ -40,8 +40,12 @@ const mouseDownFunc = (x: number, y: number, isLeftButton: boolean): void => {
         lastClickCell = gameForm.bombsField.clickHanlder(x, y);
         if (isLeftButton) {
             // skip it if cell already is opened
-            if (lastClickCell.state !== CellState.Closed) {
+            if (lastClickCell.state !== CellState.Closed &&
+                lastClickCell.state !== CellState.Digit) {
                 lastClickCell = null;
+                return;
+            }
+            if (lastClickCell.state === CellState.Digit) {
                 return;
             }
             view.clearCell(gameForm.bombsField, lastClickCell.rowIndex, lastClickCell.columnIndex);
@@ -78,6 +82,7 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
         const cellPos = gameForm.bombsField.clickHanlder(x, y);
         if (cellPos.rowIndex === lastClickCell.rowIndex &&
             cellPos.columnIndex === lastClickCell.columnIndex) {
+            console.log('mouseup ', cellPos);
             if (isLeftButton) {
                 if (cellPos.state === CellState.Closed) {
                     // ooops.. it's a bomb!
@@ -94,6 +99,12 @@ const mouseUpFunc = (x: number, y: number, isLeftButton: boolean): void => {
                     } else if (hasFirstClick) {
                         gameForm.bombsField.openCell(cellPos.rowIndex, cellPos.columnIndex);
                     }
+                }
+                if (cellPos.state === CellState.Digit) {
+                    gameForm.bombsField.openCellAroundDigit(
+                        cellPos.rowIndex,
+                        cellPos.columnIndex
+                    );
                 }
                 // set default smile button
                 if (!gameOver) {

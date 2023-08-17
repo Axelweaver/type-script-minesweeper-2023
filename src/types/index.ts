@@ -25,6 +25,7 @@ export enum CellState {
     CurrentBomb,
     Empty,
     Flag,
+    WrongFlag,
     Unknown
 }
 

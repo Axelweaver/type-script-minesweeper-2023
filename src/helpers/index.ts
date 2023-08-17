@@ -13,6 +13,7 @@ export { default as drawCellDigit } from './draws/drawCellDigit';
 export { default as drawCellFlag } from './draws/drawCellFlag';
 export { default as drawCoolFaceSmile } from './draws/drawCoolFaceSmile';
 export { default as drawCorner } from './draws/drawCorner';
+export { default as drawCross } from './draws/drawCross';
 export { default as drawDeadSmile } from './draws/drawDeadSmile';
 export { default as drawDigit } from './draws/drawDigit';
 export { default as drawEmptyRect } from './draws/drawEmptyRect';

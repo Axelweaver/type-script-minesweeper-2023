@@ -128,7 +128,7 @@ export default class BombsField {
             cell.value = count;
             return;
         }
-        // it's empty cell
+        // it's cell is empty
         this.setCellState(rowIndex, columnIndex, CellState.Empty);
         checkAround(
             rowIndex,
@@ -141,28 +141,42 @@ export default class BombsField {
                 }
             }
         );
-
-        // const PI = Math.PI;
-        // let angle = 0;
-        // while (angle < 2 * PI) {
-        //     const ri = rowIndex + Math.round(Math.sin(angle));
-        //     const ci = columnIndex + Math.round(Math.cos(angle));
-        //     if (ri >= 0 && ri < this.rowsCount && ci >= 0 && ci < this.columnsCount &&
-        //         this.getCellState(ri, ci) === CellState.Closed) {
-        //         this.openCell(ri, ci);
-        //     }
-        //     angle += PI / 4;
-        // }
     }
 
     getCellState (rowIndex: number, columnIndex: number): CellState {
         return this._cells[rowIndex][columnIndex].state;
     }
 
+    openCellAroundDigit (rowIndex: number, columnIndex: number): void {
+        const cellState = this.getCellState(rowIndex, columnIndex);
+        console.log('openCellAroundDigit', cellState);
+        if (cellState !== CellState.Digit) {
+            return;
+        }
+        const cellsAround: FieldCell[] = [];
+        checkAround(
+            rowIndex,
+            columnIndex,
+            this.rowsCount,
+            this.columnsCount,
+            (ri: number, ci: number): void => {
+                cellsAround.push(
+                    this._cells[ri][ci]
+                );
+            }
+        );
+        const digit = this._cells[rowIndex][columnIndex].value;
+        const flagsCount = cellsAround.filter(
+            (cell: FieldCell): boolean => cell.state === CellState.Flag
+        ).length;
+        console.log('openCellAroundDigit', digit, flagsCount);
+    }
+
     openBombs (rowIndex: number, columnIndex: number): void {
         this._bombs.forEach((bomb: Bomb): void => {
             const cell = this._cells[bomb.rowIndex][bomb.columnIndex];
-            if (cell.state !== CellState.Bomb) {
+            if (cell.state !== CellState.Bomb &&
+                cell.state !== CellState.Flag) {
                 cell.state = CellState.Bomb;
             }
             if (bomb.rowIndex === rowIndex &&
@@ -170,6 +184,15 @@ export default class BombsField {
                 cell.state = CellState.CurrentBomb;
             }
         });
+        const flags = this._cells.flatMap(
+            (row: FieldCell[]): any => row.filter(
+                (cell: FieldCell): boolean => cell.state === CellState.Flag
+            )
+        );
+        // flags.forEach((cell: FieldCell): void => {
+
+        // });
+        console.log('open bombs', flags);
     }
 
     setCellState (rowIndex: number, columnIndex: number, state: CellState): void {

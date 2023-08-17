@@ -23,9 +23,15 @@ import {
     drawCellFlag,
     drawCellBomb,
     drawCellDigit,
-    drawText
+    drawText,
+    drawCross
 } from 'helpers';
-import { type GameForm, type GameFormInfoPanel, type BombsField, type DigitsPanel } from './sprites';
+import {
+    type GameForm,
+    type GameFormInfoPanel,
+    type BombsField,
+    type DigitsPanel
+} from 'sprites';
 
 export default class MainView {
     canvas: HTMLCanvasElement;
@@ -160,6 +166,11 @@ export default class MainView {
             case CellState.Digit:
                 drawEmptyCell(FOREGROUND_COLOR);
                 drawCellDigit(this._context, cellRect, cell.value);
+                break;
+            case CellState.WrongFlag:
+                drawEmptyCell(FOREGROUND_COLOR);
+                drawCellBomb(this._context, cellRect);
+                drawCross(this._context, cellRect);
                 break;
             default:
                 break;
