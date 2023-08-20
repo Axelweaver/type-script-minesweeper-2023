@@ -3,7 +3,8 @@ import {
     type FieldCell,
     CellState,
     type CellClickState,
-    type Bomb
+    type Bomb,
+    type CellInfo
 } from 'types';
 import {
     calcBombsFieldRect,
@@ -11,7 +12,8 @@ import {
     findCellPosition,
     checkClickCollide,
     getRandomNumber,
-    checkAround
+    checkAround,
+    getBombsCount
 } from 'helpers';
 import { FORM_SHADOW_WIDTH } from 'setup';
 
@@ -115,12 +117,11 @@ export default class BombsField {
         if (cellState !== CellState.Closed) {
             return;
         }
-        const count = this._bombs.filter((bomb: Bomb): boolean =>
-            bomb.rowIndex > rowIndex - 2 &&
-            bomb.rowIndex < rowIndex + 2 &&
-            bomb.columnIndex > columnIndex - 2 &&
-            bomb.columnIndex < columnIndex + 2
-        ).length;
+        const count = getBombsCount(
+            this._bombs,
+            rowIndex,
+            columnIndex
+        );
 
         if (count > 0) {
             const cell = this._cells[rowIndex][columnIndex];
@@ -147,29 +148,43 @@ export default class BombsField {
         return this._cells[rowIndex][columnIndex].state;
     }
 
-    openCellAroundDigit (rowIndex: number, columnIndex: number): void {
-        const cellState = this.getCellState(rowIndex, columnIndex);
-        console.log('openCellAroundDigit', cellState);
-        if (cellState !== CellState.Digit) {
-            return;
-        }
-        const cellsAround: FieldCell[] = [];
+    getCellsAround (rowIndex: number, columnIndex: number): CellInfo[] {
+        const cellsAround: CellInfo[] = [];
         checkAround(
             rowIndex,
             columnIndex,
             this.rowsCount,
             this.columnsCount,
             (ri: number, ci: number): void => {
-                cellsAround.push(
-                    this._cells[ri][ci]
-                );
+                cellsAround.push({
+                    rowIndex: ri,
+                    columnIndex: ci,
+                    state: this._cells[ri][ci].state
+                });
             }
         );
+
+        return cellsAround;
+    }
+
+    checkCellAroundDigit (rowIndex: number, columnIndex: number): CellInfo[] {
+        const cellState = this.getCellState(rowIndex, columnIndex);
+        // console.log('openCellAroundDigit', cellState);
+        if (cellState !== CellState.Digit) {
+            return [];
+        }
+        const cellsAround: CellInfo[] = this.getCellsAround(rowIndex, columnIndex);
+
         const digit = this._cells[rowIndex][columnIndex].value;
         const flagsCount = cellsAround.filter(
-            (cell: FieldCell): boolean => cell.state === CellState.Flag
+            (cell: CellInfo): boolean => cell.state === CellState.Flag
         ).length;
-        console.log('openCellAroundDigit', digit, flagsCount);
+        // console.log('openCellAroundDigit', digit, flagsCount);
+        if (digit !== flagsCount) {
+            return [];
+        }
+
+        return cellsAround;
     }
 
     openBombs (rowIndex: number, columnIndex: number): void {

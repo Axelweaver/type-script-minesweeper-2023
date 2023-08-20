@@ -22,4 +22,6 @@ export { default as drawHappySmile } from './draws/drawHappySmile';
 export { default as drawSuprisedSmile } from './draws/drawSuprisedSmile';
 export { default as drawText } from './draws/drawText';
 export { default as findCellPosition } from './findCellPosition';
+export { default as getBombsCount } from './getBombsCount';
+export { default as getButtonState } from './getButtonState';
 export { default as getRandomNumber } from './getRandomNumber';

@@ -1,4 +1,6 @@
-import { type ClickFunc, type MouseEventHandler } from 'types';
+import { type ClickFunc, type MouseEventHandler, type MouseButtonState } from 'types';
+
+import { getButtonState } from 'helpers';
 
 export default class MouseClickHandler {
     private readonly _canvasRect: DOMRect;
@@ -12,10 +14,11 @@ export default class MouseClickHandler {
         const canvasTop = this._canvasRect.top;
 
         return function (e: MouseEvent) {
+            // console.log('type:', e.type, 'button:', e.button, 'buttons', e.buttons);
             const x = e.clientX - canvasLeft;
             const y = e.clientY - canvasTop;
-            const isLeftButton = e.button === 0;
-            clickFn(x, y, isLeftButton);
+            const state: MouseButtonState = getButtonState(e);
+            clickFn({ x, y, button: state });
         };
     }
 }

@@ -4,7 +4,6 @@ export interface IRectangle {
     width: number
     height: number
 }
-
 export interface ITextInfo {
     positionX: number
     positionY: number
@@ -12,12 +11,10 @@ export interface ITextInfo {
     font: string
     align: CanvasTextAlign
 }
-
 export interface GameSquare {
     width: number
     height: number
 }
-
 export enum CellState {
     Closed,
     Digit,
@@ -28,15 +25,29 @@ export enum CellState {
     WrongFlag,
     Unknown
 }
-
+export enum MouseButtonState {
+    Left,
+    Right,
+    Both,
+    Middle
+}
+export interface MouseClickState {
+    x: number
+    y: number
+    button: MouseButtonState
+}
 export interface CellClickState {
     rowIndex: number
     columnIndex: number
     isLeftButton: boolean
     state: CellState
-};
-
-export type ClickFunc = (x: number, y: number, isLeftButton: boolean) => void;
+}
+export interface CellInfo {
+    rowIndex: number
+    columnIndex: number
+    state: CellState
+}
+export type ClickFunc = (clickState: MouseClickState) => void;
 
 export type MouseEventHandler = (e: MouseEvent) => void;
 
