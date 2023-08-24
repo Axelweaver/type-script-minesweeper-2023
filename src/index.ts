@@ -24,7 +24,7 @@ view.drawGameForm(gameForm);
 // game variables
 let hasFirstClick = false;
 let lastClickCell: CellClickState | null;
-let lastCellsToCheck: CellInfo[] | null;
+// let lastCellsToCheck: CellInfo[] | null;
 let isSmileClick = false;
 let timerIntervalId = 0;
 let gameOver = false;
